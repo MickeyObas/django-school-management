@@ -4,6 +4,7 @@ from django.contrib import messages
 from .models import *
 from .forms import CustomUserCreationForm, StudentProfileForm, TeacherProfileForm
 
+
 # Create your views here.
 def student_register(request):
     if request.method == 'POST':
@@ -50,13 +51,12 @@ def login(request):
                 auth.login(request, user)
                 print("Student Logged in.")
                 print(request.user.email, request.user.account_type)
-                return redirect('s_profile', pk=request.user.id)
+                profile_pk = StudentProfile.objects.get(user=request.user).id
+                return redirect('s_profile', pk=profile_pk)
             elif user.account_type == 'TEACHER':
                 auth.login(request, user)
-                print("Teacher Logged in.")
-                print(request.user.email)
-                print(request.user.email, request.user.account_type)
-                return redirect('t_profile', pk=request.user.id)
+                profile_pk = TeacherProfile.objects.get(user=request.user).id
+                return redirect('t_profile', pk=profile_pk)
             else:
                 messages.error(request, "Access denied {}".format(user.email))
         else:
@@ -68,28 +68,39 @@ def login(request):
 
 def student_profile(request, pk):
 
-    name = 'Student'
-    form = StudentProfileForm()
+    student_user = StudentProfile.objects.get(id=pk)
+
+    if request.method == 'POST':
+        form = StudentProfileForm(request.POST, instance=student_user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile Saved.")
+        else:
+            messages.error(request, "Invalid Input.")
+    else:
+        form = StudentProfileForm(instance=student_user)
+    
 
     context = {
-        "form": form,
-        "name": name,
-    }
+        "form": form
+        }
 
     return render(request, 'accounts/student_profile.html', context)
 
 
 def teacher_profile(request, pk):
 
-    name = 'Teacher'
-    form = TeacherProfileForm()
-    print(name)
+    teacher_user = TeacherProfile.objects.get(id=pk)
 
-    context = {
-        "form": form,
-        "name": name,
-    }
-    
+    if request.method == 'POST':
+        form = TeacherProfileForm(request.POST, instance=teacher_user)
+        if form.is_valid():
+            form.save()
+        else:
+            messages.error(request, "Invalid input.")
+    else:
+        form = TeacherProfileForm(instance=teacher_form)
 
-    form = TeacherProfileForm()
+    context = {"form": form}
+
     return render(request, 'accounts/teacher_profile.html', context)

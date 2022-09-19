@@ -2,7 +2,108 @@
 
 {% block content %}
 
-<h1>Student Profile</h1>
-{{form.as_p}}
+{% if messages %}
+<ul> 
+{% for message in messages %}
+<li>{{message}}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{{request.user.email}}
+
+<h1 class="text-center">Student Profile</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{form.as_p}}
+                        <button type="submit" class="btn btn-primary text-white mt-3">Save</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4 mt-3 mt-sm-3 mt-md-0 mb-3 mb-sm-3 justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="text-center lead">Notifications</h2>
+                    </div>
+                    <div class="card-text">
+                        <ul>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                            <li>Imagine some notable notification here.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="lead text-center">My Desk</h2>
+                    </div>
+                    <p class="display-5 card-title text-center">
+                        Check out the resources tailored specifically for <span class="text-decoration-underline">YOU</span>
+                    </p>
+                </div>
+                <div class="row row-cols-1 row-cols-md-3">
+                    <div class="col px-2 px-sm-2 px-md-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="text-center lead">Textbooks</h3>
+                                </div>
+                               <p class="card-text">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi consequuntur qui perferendis commodi dicta, eligendi modi assumenda iste, eaque accusamus itaque sapiente esse? Nihil impedit eaque sed magni dicta maxime omnis fuga eveniet delectus, aliquid iusto ratione dolorum consectetur natus. Asperiores consectetur deleniti neque omnis voluptatibus? Consequuntur cupiditate laborum perferendis.
+                               </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col px-2 px-sm-2 px-md-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="text-center lead">Acheivements</h3>
+                                </div>
+                                <p class="card-text">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi consequuntur qui perferendis commodi dicta, eligendi modi assumenda iste, eaque accusamus itaque sapiente esse? Nihil impedit eaque sed magni dicta maxime omnis fuga eveniet delectus, aliquid iusto ratione dolorum consectetur natus. Asperiores consectetur deleniti neque omnis voluptatibus? Consequuntur cupiditate laborum perferendis.
+                                   </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col px-2 px-sm-2 px-md-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="text-center lead">Records</h3>
+                                </div>
+                                <p class="card-text">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi consequuntur qui perferendis commodi dicta, eligendi modi assumenda iste, eaque accusamus itaque sapiente esse? Nihil impedit eaque sed magni dicta maxime omnis fuga eveniet delectus, aliquid iusto ratione dolorum consectetur natus. Asperiores consectetur deleniti neque omnis voluptatibus? Consequuntur cupiditate laborum perferendis.
+                                   </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {% endblock %}
