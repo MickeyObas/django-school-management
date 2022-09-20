@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib import messages
 from .models import *
+from core.decorators import already_logged_in
 from .forms import CustomUserCreationForm, StudentProfileForm, TeacherProfileForm
+from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
+@already_logged_in
 def student_register(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -23,6 +25,7 @@ def student_register(request):
     return render(request, 'accounts/student_register.html')
 
 
+@already_logged_in
 def teacher_register(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -39,7 +42,7 @@ def teacher_register(request):
             return redirect('t_register')
     return render(request, 'accounts/teacher_register.html')
 
-
+@already_logged_in
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -66,6 +69,17 @@ def login(request):
     return render(request, 'accounts/login.html')
 
 
+@login_required(login_url='login')
+def logout(request):
+    if request.user.is_authenticated:
+        auth.logout(request)
+        return redirect('login')
+    else:
+        messages.error(request, "You're not logged in.")
+        return redirect('login')
+
+
+@login_required(login_url='login')
 def student_profile(request, pk):
 
     student_user = StudentProfile.objects.get(id=pk)
@@ -80,7 +94,6 @@ def student_profile(request, pk):
     else:
         form = StudentProfileForm(instance=student_user)
     
-
     context = {
         "form": form
         }
@@ -88,6 +101,7 @@ def student_profile(request, pk):
     return render(request, 'accounts/student_profile.html', context)
 
 
+@login_required(login_url='login')
 def teacher_profile(request, pk):
 
     teacher_user = TeacherProfile.objects.get(id=pk)
@@ -99,7 +113,7 @@ def teacher_profile(request, pk):
         else:
             messages.error(request, "Invalid input.")
     else:
-        form = TeacherProfileForm(instance=teacher_form)
+        form = TeacherProfileForm(instance=teacher_user)
 
     context = {"form": form}
 

@@ -12,10 +12,11 @@
 </head>
 
 <body>
+    {% include 'partials/topbar.html' %}
     {% block content %}
     
     {% endblock %}
-
+    {% include 'partials/footer.html' %}
 
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
