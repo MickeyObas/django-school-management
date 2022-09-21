@@ -18,6 +18,7 @@ def student_register(request):
         password2 = request.POST.get('password2')
         if password1 == password2:
             Student.objects.create_user(email=email, password=password2)
+            messages.success(request, "Account registered.")
             return redirect('login')
         else:
             messages.error(request, "Passwords don't match. Please try again.")
@@ -85,7 +86,7 @@ def student_profile(request, pk):
     student_profile = StudentProfile.objects.get(id=pk)
 
     if request.method == 'POST':
-        form = StudentProfileForm(request.POST, instance=student_user)
+        form = StudentProfileForm(request.POST, instance=student_profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile Saved.")
@@ -108,7 +109,7 @@ def teacher_profile(request, pk):
     teacher_profile = TeacherProfile.objects.get(id=pk)
 
     if request.method == 'POST':
-        form = TeacherProfileForm(request.POST, instance=teacher_user)
+        form = TeacherProfileForm(request.POST, instance=teacher_profile)
         if form.is_valid():
             form.save()
         else:
