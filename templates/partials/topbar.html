@@ -14,7 +14,12 @@
             " aria-current="page" href="{% url 'index' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'profile' in request.path %} active {% endif %}"
+            <a class="nav-link 
+            {% if student_user %}
+            {% if 'profile' in request.path and request.user == student_user.user %} active {% endif %}"
+            {% elif teacher_user %}
+            {% if 'profile' in request.path and request.user == teacher_user.user %} active {% endif %}"
+            {% endif %}
             {% if request.user.account_type == 'STUDENT' %}
             href = "{% url 's_profile' request.user.studentprofile.id %}"
             {% elif request.user.account_type == 'TEACHER' %}

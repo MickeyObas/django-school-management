@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+
+<h1>{{request.user.email}}</h1>
 <div class="px-4 py-5 my-5 text-center">
     <img class="d-block mx-auto mb-4" src="{% static 'wallpapersden.com_senku-ishigami-dr-stone_1280x1024.jpg' %}" alt="" width="72" height="57">
     <h1 class="display-5 fw-bold">Centered hero</h1>

@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if student_user.user == request.user %}
+
 {% if messages %}
 <ul> 
 {% for message in messages %}
@@ -105,5 +107,10 @@
     </div>
 </div>
 
+{% else %}
+
+<h1>This ain't your page fam.</h1>
+
+{% endif %}
 
 {% endblock %}

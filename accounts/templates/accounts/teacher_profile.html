@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if teacher_user.user == request.user %}
+
 {% if messages %}
 <ul> 
 {% for message in messages %}
@@ -102,5 +104,10 @@
     </div>
 </div>
 
+{% else %}
+
+<h1>This ain't your page buddy.</h1>
+
+{% endif %}
 
 {% endblock %}

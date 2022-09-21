@@ -95,7 +95,8 @@ def student_profile(request, pk):
         form = StudentProfileForm(instance=student_user)
     
     context = {
-        "form": form
+        "form": form,
+        "student_user": student_user,
         }
 
     return render(request, 'accounts/student_profile.html', context)
@@ -115,6 +116,8 @@ def teacher_profile(request, pk):
     else:
         form = TeacherProfileForm(instance=teacher_user)
 
-    context = {"form": form}
+    context = {"form": form,
+                "teacher_user": teacher_user,
+    }
 
     return render(request, 'accounts/teacher_profile.html', context)
