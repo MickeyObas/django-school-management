@@ -58,10 +58,7 @@
             <a href="{% url 'logout' %}" class="nav-link">Logout</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <h5 class="me-2 d-flex text-white">Welcome, {{request.user.email}}.</h5>
       </div>
     </div>
   </nav>
