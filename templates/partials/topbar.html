@@ -13,13 +13,11 @@
             {% endif %}
             " aria-current="page" href="{% url 'index' %}">Home</a>
           </li>
+
+          {% if student_user or student_profile %}
           <li class="nav-item">
-            <a class="nav-link 
-            {% if student_user %}
-            {% if 'profile' in request.path and request.user == student_user.user %} active {% endif %}"
-            {% elif teacher_user %}
-            {% if 'profile' in request.path and request.user == teacher_user.user %} active {% endif %}"
-            {% endif %}
+            <a class="nav-link
+            {% if 'profile' in request.path and request.user == student_profile.user %} active {% endif %}"
             {% if request.user.account_type == 'STUDENT' %}
             href = "{% url 's_profile' request.user.studentprofile.id %}"
             {% elif request.user.account_type == 'TEACHER' %}
@@ -29,6 +27,23 @@
             {% endif %}
             >Profile</a>
           </li>
+
+          {% elif teacher_user or teacher_profile %}
+          <li class="nav-item">
+            <a class="nav-link
+            {% if 'profile' in request.path and request.user == teacher_profile.user %} active {% endif %}"
+            {% if request.user.account_type == 'STUDENT' %}
+            href = "{% url 's_profile' request.user.studentprofile.id %}"
+            {% elif request.user.account_type == 'TEACHER' %}
+            href = "{% url 't_profile' request.user.teacherprofile.id %}"
+            {% else %}
+            href = "#"
+            {% endif %}
+            >Profile</a>
+          </li>
+
+          {% endif %}
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Activity

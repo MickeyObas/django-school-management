@@ -82,7 +82,7 @@ def logout(request):
 @login_required(login_url='login')
 def student_profile(request, pk):
 
-    student_user = StudentProfile.objects.get(id=pk)
+    student_profile = StudentProfile.objects.get(id=pk)
 
     if request.method == 'POST':
         form = StudentProfileForm(request.POST, instance=student_user)
@@ -92,11 +92,11 @@ def student_profile(request, pk):
         else:
             messages.error(request, "Invalid Input.")
     else:
-        form = StudentProfileForm(instance=student_user)
+        form = StudentProfileForm(instance=student_profile)
     
     context = {
         "form": form,
-        "student_user": student_user,
+        "student_profile": student_profile,
         }
 
     return render(request, 'accounts/student_profile.html', context)
@@ -105,7 +105,7 @@ def student_profile(request, pk):
 @login_required(login_url='login')
 def teacher_profile(request, pk):
 
-    teacher_user = TeacherProfile.objects.get(id=pk)
+    teacher_profile = TeacherProfile.objects.get(id=pk)
 
     if request.method == 'POST':
         form = TeacherProfileForm(request.POST, instance=teacher_user)
@@ -114,10 +114,10 @@ def teacher_profile(request, pk):
         else:
             messages.error(request, "Invalid input.")
     else:
-        form = TeacherProfileForm(instance=teacher_user)
+        form = TeacherProfileForm(instance=teacher_profile)
 
     context = {"form": form,
-                "teacher_user": teacher_user,
+                "teacher_profile": teacher_profile,
     }
 
     return render(request, 'accounts/teacher_profile.html', context)
