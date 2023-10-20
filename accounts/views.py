@@ -122,3 +122,10 @@ def teacher_profile(request, pk):
     }
 
     return render(request, 'accounts/teacher_profile.html', context)
+
+def already_logged_in(view_func):
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('login')
