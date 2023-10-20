@@ -7,6 +7,6 @@ class ProfilesConfig(AppConfig):
 
     def ready(self) -> None:
 
-        from accounts.signals import create_user_profile
+        from accounts.signals import create_profile_from_user
 
         return super().ready()
