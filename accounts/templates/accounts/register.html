@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div id="register-form">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            {% if field.errors %}
+            {% for error in field.errors %}
+            <p>{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            <p>{{field.label}}</p>
+            <p>{{field}}</p>
+            <p>{{field.help_text}}</p>
+            {% endfor %}
+            <button>Register</button>
+        </form>
+    </div>
+</body>
+</html>

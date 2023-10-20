@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+
+
+<p>Pretend this is a good looking form lmao</p>
+<form action="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Save</button>
+</form>
+
+{% endblock content %}
+   

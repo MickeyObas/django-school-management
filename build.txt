@@ -1,0 +1,38 @@
+Here is a rough draft of the make-up of the school management system.
+
+Core Functionalities 
+- Student Management
+    - Registration and enrollment
+    - Profiles with personal information 
+    - Class assignment and scheduling
+    - Attendance tracking *
+- Teacher Management
+    - Profiles with personal and contact information
+    - Assignment of classes and subjects to teachers
+    - Salary management for teachers
+- Course and Curriculum Management
+    - Course creation and management
+    - Lesson planning and resource management
+    - Classroom resource allocation
+- Grade and Assessment 
+    - Grading system setup 
+    - Recording and calculation of student grades
+    - Report card generation 
+    - Assessment and examination management
+
+
+Core Models
+- Student 
+- Teacher/Lecturer
+- Course 
+- Department 
+
+
+Dashboards 
+- Student
+    - Profile 
+    - List of courses 
+        - PDFs 
+        - Course Outline 
+    - Payments
+    - Notifications / Mail 
