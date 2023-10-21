@@ -31,7 +31,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('dashboard')
+            return redirect('student_profile')
         else:
             return messages.error(request, "Invalid credentials.")
         

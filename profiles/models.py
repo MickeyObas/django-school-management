@@ -13,8 +13,6 @@ class BaseProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     profile_picture = models.ImageField(blank=True, null=True)
-    first_name = models.CharField(max_length=80)
-    last_name = models.CharField(max_length=80)
     birthdate = models.DateField(default=timezone.now)
     # TODO Clarify DEPARTMENT - LECTURER relaional logic.
     department = models.ForeignKey(Department, null=True, blank=True, on_delete=models.CASCADE)
