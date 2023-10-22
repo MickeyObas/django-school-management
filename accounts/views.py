@@ -11,15 +11,20 @@ def register(request):
 
     form = CustomUserCreationForm()
 
+    context = {
+        "form": form
+    }
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('login')
         else:
+            print("Bad form.")
             return messages.error(request, "Form filled incorrectly. Please do try again.")
         
-    return render(request, "accounts/register.html")
+    return render(request, "accounts/register.html", context)
 
 
 def login(request):
@@ -31,7 +36,12 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return redirect('student_profile')
+            if not user.first_login:
+                return redirect('dashboard')
+            else:
+                user.first_login = False
+                user.save()
+                return redirect('student_profile')
         else:
             return messages.error(request, "Invalid credentials.")
         

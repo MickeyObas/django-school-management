@@ -1,4 +1,6 @@
-html, body {
-    height: 100%;
-    background-color: turquoise;
+.fieldWrapper input{
+   padding: 5px 5px;
+   margin: 10px 5px;
+   outline: none;
+   font-size: 16px;
 }

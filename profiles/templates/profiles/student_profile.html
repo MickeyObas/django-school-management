@@ -8,6 +8,7 @@
 <p>Pretend this is a good looking form lmao</p>
 <form action="" method="post">
     {% csrf_token %}
+    <!-- TODO Wrap this into a form snippet for rendering -->
     {{form.as_p}}
     <button>Save</button>
 </form>

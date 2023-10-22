@@ -1,0 +1,41 @@
+{{ form.non_field_errors}}
+    <div class="fieldWrapper">
+        {{form.profile_picture.errors}}
+        <label for={{form.profile_picture.id_for_label}}>Profile Picture</label>
+        {{form.profile_picture}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.first_name.errors}}
+        <label for={{form.first_name.id_for_label}}>First Name</label>
+        {{form.first_name}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.last_name.errors}}
+        <label for={{form.last_name.id_for_label}}>Last Name</label>
+        {{form.last_name}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.middle_name.errors}}
+        <label for={{form.middle_name.id_for_label}}>Middle Name</label>
+        {{form.middle_name}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.department.errors}}
+        <label for={{form.department.id_for_label}}>Department</label>
+        {{form.department}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.birthdate.errors}}
+        <label for={{form.birthdate.id_for_label}}>Date of Birth</label>
+        {{form.birthdate}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.gender.errors}}
+        <label for={{form.gender.id_for_label}}>Gender</label>
+        {{form.gender}}
+    </div>
+    <div class="fieldWrapper">
+        {{form.state_of_origin.errors}}
+        <label for={{form.state_of_origin.id_for_label}}>State of Origin</label>
+        {{form.state_of_origin}}
+    </div>

@@ -10,13 +10,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         LECTURER = 'L', "Lecturer"
 
     email = models.EmailField(unique=True, max_length=255)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    middle_name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
+    middle_name = models.CharField(max_length=40)
     account_type = models.CharField(max_length=1, choices=AccountChoices.choices, default='S')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    first_login = models.BooleanField(default=True)
 
     objects = CustomUserManager()
 
