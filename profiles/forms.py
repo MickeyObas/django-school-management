@@ -1,52 +1,38 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from .models import Student
+from department.models import Department
 
-
-class StudentProfileForm(forms.Form):
-    pass
-
-
-class StudentProfileFormm(forms.ModelForm):
-    class Meta:
-
-        model = Student
-
-        fields = [
-            "profile_picture",
-            "birthdate",
-            "department",
-            "gender",
-            "state_of_origin",
-        ]
-
-        widgets = {
-            "birthdate": forms.DateInput(attrs={"disabled": True}),
-            "department": forms.Select(attrs={"disabled": True}),
-            "gender": forms.Select(attrs={"disabled": True}),
-            "state_of_origin": forms.TextInput(attrs={"disabled": True}),
-        }
-
-    first_name = forms.CharField(
-        max_length=100,
-        label="First Name",
-        widget=(forms.TextInput(attrs={"disabled": True})),
-    )
-    last_name = forms.CharField(
-        max_length=100,
-        label="Last Name",
-        widget=(forms.TextInput(attrs={"disabled": True})),
-    )
-    middle_name = forms.CharField(
-        max_length=100,
-        label="Middle Name",
-        widget=(forms.TextInput(attrs={"disabled": True})),
+class StudentCompleteProfileForm(forms.Form):
+    
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female')
     )
 
-class StudentDisplayForm(forms.Form):
-    first_name = forms.CharField(disabled=True)
-    last_name = forms.CharField(disabled=True)
-    middle_name = forms.CharField(disabled=True)
-    department = forms.CharField(disabled=True)
-    level = forms.CharField(disabled=True)
+    # TODO Find a way to populate this using the actual list of departments available
+    DEPARTMENT_CHOICES = (
+        ('CSC', 'Computer Science'),
+        ('SEN', 'Software Engineering')
+    )
+
+    first_name = forms.CharField(disabled=True, required=False)
+    last_name = forms.CharField(disabled=True, required=False)
+    middle_name = forms.CharField(disabled=True, required=False)
+    gender = forms.ChoiceField(choices=GENDER_CHOICES)
+    department = forms.ChoiceField(choices=DEPARTMENT_CHOICES)
+    level = forms.CharField(disabled=True, required=False)
+    birthdate = forms.DateField()
+    state_of_origin = forms.CharField(max_length=20)
+    profile_picture = forms.ImageField()
+
+    def clean_department(self):
+        passed_department_abbr = self.cleaned_data['department']
+        department_object = Department.objects.filter(abbreviation=passed_department_abbr)
+        if not department_object.exists():
+            raise ValidationError("Department does not exist")
+        else:
+            return passed_department_abbr
+
     

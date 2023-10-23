@@ -7,6 +7,7 @@ class Department(models.Model):
     description = models.TextField()
     location = models.CharField(max_length=256)
     logo = models.ImageField(blank=True, null=True)
+    abbreviation = models.CharField(max_length=3, null=True)
 
     def __str__(self):
         return self.name

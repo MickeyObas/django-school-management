@@ -6,7 +6,7 @@
 
 
 <p>Pretend this is a good looking form lmao</p>
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <!-- TODO Wrap this into a form snippet for rendering -->
     {{form.as_p}}

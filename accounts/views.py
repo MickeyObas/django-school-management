@@ -41,7 +41,7 @@ def login(request):
             else:
                 user.first_login = False
                 user.save()
-                return redirect('student_profile')
+                return redirect('student_complete_profile')
         else:
             return messages.error(request, "Invalid credentials.")
         
@@ -51,6 +51,7 @@ def login(request):
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
+    return redirect('login')
 
 
 def already_logged_in(view_func):

@@ -12,7 +12,7 @@ from datetime import date
 class BaseProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
-    profile_picture = models.ImageField(blank=True, null=True)
+    profile_picture = models.ImageField(blank=True, null=True, upload_to='profile_picture')
     birthdate = models.DateField(default=timezone.now)
     # TODO Clarify DEPARTMENT - LECTURER relaional logic.
     department = models.ForeignKey(Department, null=True, blank=True, on_delete=models.CASCADE)
