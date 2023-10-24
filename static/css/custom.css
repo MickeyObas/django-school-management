@@ -1,6 +1,63 @@
+#header{
+   margin-top: 25px;
+}
+
+#footer{
+   margin-bottom: 25px
+}
+
 .fieldWrapper input{
    padding: 5px 5px;
    margin: 10px 5px;
    outline: none;
    font-size: 16px;
 }
+
+.menu{
+   background-color: black;
+   height: 50px;
+   width: 100%;
+   padding: 5px 10px
+}
+
+.menu ul{
+   height: 100%;;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+}
+
+.menu li{
+   list-style: none;
+   color: white;
+   cursor: pointer
+}
+
+.menu a{
+   text-decoration: none;
+   color: white;
+   transition: all 0.3s;
+   border-radius: 40px;
+   padding: 5px;
+}
+
+.menu a:hover{
+   color: black;
+   background-color: white;
+}
+
+.courseBox{
+   padding: 20px
+}
+
+.courseBox h2{
+   color: blue;
+   font-weight: 400;
+   margin-bottom: 30px;
+}
+
+.courseCode{
+   width: auto;
+   color: blue;
+}
+

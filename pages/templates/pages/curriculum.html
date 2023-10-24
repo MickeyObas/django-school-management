@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} My Curriculum {% endblock title %}
+
+{% block content %}
+
+
+<div class="courseBox">
+    <h2>My Courses</h2>
+    {% with courses=request.user.student.course_pack.courses.all %}
+    {% for course in courses %}
+    <div class="courseItem">
+        <p class="courseCode"><a href="{{course.get_absolute_url}}">{{course.code}}</a></p>
+        <p class="courseTitle">{{course.title}}</p>
+    </div>
+    {% endfor %}
+    {% endwith %}
+</div>
+
+{% endblock content %}
