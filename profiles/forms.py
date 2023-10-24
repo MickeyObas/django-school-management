@@ -4,18 +4,13 @@ from django.core.exceptions import ValidationError
 from .models import Student
 from department.models import Department
 
+
 class StudentCompleteProfileForm(forms.Form):
-    
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female')
-    )
+
+    GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
 
     # TODO Find a way to populate this using the actual list of departments available
-    DEPARTMENT_CHOICES = (
-        ('CSC', 'Computer Science'),
-        ('SEN', 'Software Engineering')
-    )
+    DEPARTMENT_CHOICES = (("CSC", "Computer Science"), ("SEN", "Software Engineering"))
 
     first_name = forms.CharField(disabled=True, required=False)
     last_name = forms.CharField(disabled=True, required=False)
@@ -28,11 +23,11 @@ class StudentCompleteProfileForm(forms.Form):
     profile_picture = forms.ImageField()
 
     def clean_department(self):
-        passed_department_abbr = self.cleaned_data['department']
-        department_object = Department.objects.filter(abbreviation=passed_department_abbr)
+        passed_department_abbr = self.cleaned_data["department"]
+        department_object = Department.objects.filter(
+            abbreviation=passed_department_abbr
+        )
         if not department_object.exists():
             raise ValidationError("Department does not exist")
         else:
             return passed_department_abbr
-
-    
