@@ -58,7 +58,8 @@ class Student(BaseProfile):
     level = models.CharField(
         max_length=3, choices=LevelChoices.choices, default=LevelChoices.FIRST_YEAR
     )
-    courses = models.ManyToManyField(Course, blank=True)
+    
+    course_pack = models.ForeignKey('curriculum.DepartmentLevelCoursePack', on_delete=models.SET_NULL, null=True)
 
 
 class Lecturer(BaseProfile):

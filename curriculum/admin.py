@@ -1,11 +1,15 @@
 from django.contrib import admin
 
-from .models import Course
-from department.models import Department
+from .models import Course, DepartmentLevelCoursePack
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['title', 'description']
+    list_display = ['code', 'title']
+    
+@admin.register(DepartmentLevelCoursePack)
+class DepartmentLevelCoursePackAdmin(admin.ModelAdmin):
+    list_display = ['department', 'level']
+    
     
 
 
