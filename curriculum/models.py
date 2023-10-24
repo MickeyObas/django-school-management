@@ -1,7 +1,7 @@
 from django.db import models
 
 class Course(models.Model):
-    # TODO Enrich this class with fields such as no. of units.
+    no_of_units = models.IntegerField(default=2)
     title = models.CharField(max_length=256)
     description = models.TextField()
 

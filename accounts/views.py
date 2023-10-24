@@ -43,7 +43,8 @@ def login(request):
                 user.save()
                 return redirect("student_complete_profile")
         else:
-            return messages.error(request, "Invalid credentials.")
+            messages.error(request, "Invalid credentials.")
+            return redirect('login')
 
     return render(request, "accounts/login.html")
 

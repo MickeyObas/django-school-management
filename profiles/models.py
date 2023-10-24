@@ -7,6 +7,7 @@ from department.models import Department
 
 import random
 from datetime import date
+from PIL import Image
 
 
 class BaseProfile(models.Model):
@@ -30,6 +31,14 @@ class BaseProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.profile_picture:
+            img = Image.open(self.profile_picture.path)
+            max_size = (120, 120)
+            img.thumbnail(max_size)
+            img.save(self.profile_picture.path)
 
     @property
     def age(self):

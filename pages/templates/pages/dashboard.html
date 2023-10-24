@@ -4,22 +4,14 @@
 
 {% block content %}
 
-    <h1>Welcome, {{request.user.first_name}}</h1>
-    {% if request.user.account_type == 'S' %}
-    <p>This is a student dashboard.</p>
-    <div class="course-box">
-        <p>Courses you are taking this semester: </p>
-        {% with courses=request.user.student.courses.all %}
-            {% for course in courses %}
-            <p>{{course.title}}</p>
-            {% endfor %}
-        {% endwith %}
-
-    </div>
+    <h1>Welcome, {{request.user.last_name | upper}} {{request.user.first_name}} {{request.user.middle_name}}.</h1>
+    <br>
+    <img src="{{request.user.student.profile_picture.url}}" alt="">
+    <p>Your profile information</p>
+    <p>Current level: {{request.user.student.level}}</p>
+    <p>Department: {{request.user.student.department}}</p>
+    <p>Email Address: {{request.user.email}}</p>
      
-    {% else %}
-    <p>This is a lecturer dashboard.</p>
-    {% endif %}
     <a href="{% url 'logout' %}">Logout</a>
 
 {% endblock content %}
