@@ -61,3 +61,18 @@
    color: blue;
 }
 
+.messageBox{
+   padding: 25px;
+   border: 1px solid black;
+   margin-bottom: 30px;
+}
+
+.messageBox > h3{
+   color: red;
+   font-weight: 400;
+   margin: 10px 0;
+}
+
+.messageBox p{
+   line-height: 10px;
+}

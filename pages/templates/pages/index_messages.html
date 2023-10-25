@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>My Messages</h2>
+{% if messages %}
+{% for message in messages %}
+<div class="messageBox">
+    <h3><a href="{% url 'view_message' message.id %}">{{message.title}}</a></h3>
+    <p>{{message.body}}</p>
+    <small>{{message.timestamp|timesince}} ago</small>
+    <br />
+</div>
+{% empty %}
+<p>No Messages Yet</p>
+{% endfor %}
+{% endif %}
+{% endblock content %}

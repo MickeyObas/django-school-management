@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "profiles.apps.ProfilesConfig",
     "department.apps.DepartmentConfig",
     "accounts.apps.AccountsConfig",
+    "messaging.apps.MessagingConfig",
     "pages.apps.PagesConfig",
     # Third-party Apps
     "rest_framework",

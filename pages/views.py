@@ -8,7 +8,3 @@ from django.contrib.auth.decorators import login_required
 def dashboard(request):
     return render(request, "pages/dashboard.html")
 
-@login_required(login_url='login')
-def curriculum_page(request):
-    return render(request, 'pages/curriculum.html')
-

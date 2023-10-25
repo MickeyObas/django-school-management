@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path("", views.dashboard, name="dashboard"),
     path("profiles/", include("profiles.urls")),
-    path("curriculum/", include("curriculum.urls"))
+    path("curriculum/", include("curriculum.urls")),
+    path("messages/", include('messaging.urls'))
 ]
