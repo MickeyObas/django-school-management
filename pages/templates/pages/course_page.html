@@ -3,5 +3,12 @@
 {% block content %}
 
 <h2>{{course.code}} | {{course.title}}</h2>
+<hr>
+<h2>Lecturer(s) in charge</h2>
+{% for lecturer in course.get_assigned_lecturers %}
+<p>{{lecturer}}</p>
+{% empty %}
+<p>No Lecturer Assigned Yet</p>
+{% endfor %}
 
 {% endblock %}

@@ -10,16 +10,7 @@
     <p>Your profile information</p>
     <p>Current level: {{request.user.student.level}}</p>
     <p>Department: {{request.user.student.department}}</p>
-    <p>Email Address: {{request.user.email}}</p>
-    <p>My Courses: </p>
-    
-    {% with courses=request.user.student.course_pack.courses.all %}
-    {% for course in courses %}
-    <p>{{course}}</p>
-    {% endfor %}
-    {% endwith %}
-    
-     
+    <p>Email Address: {{request.user.email}}</p> 
     
     <a href="{% url 'logout' %}">Logout</a>
 

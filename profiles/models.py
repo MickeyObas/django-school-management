@@ -64,6 +64,7 @@ class Student(BaseProfile):
 
 class Lecturer(BaseProfile):
     # TODO Add qualifications as a field.
+    prefix = models.CharField(max_length=10)
     lecturer_id = models.CharField(
         max_length=256, default=f"lecture{random.randint(100, 1000)}"
     )
@@ -71,5 +72,9 @@ class Lecturer(BaseProfile):
     teaching_experience = models.IntegerField(default=4)
     courses_taught = models.ManyToManyField(Course, blank=True)
 
-
+    def __str__(self):
+        if not self.prefix:
+            return super().__str__()
+        else:
+            return f"{self.prefix}. {self.user.last_name} {self.user.first_name}"
 # TODO Write script to bulk create users and profiles.

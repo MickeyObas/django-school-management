@@ -6,6 +6,7 @@ class Course(models.Model):
     code = models.CharField(max_length=10, unique=True)
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=70)
+    synopsis = models.TextField(null=True)
 
     # TODO Create Document model that can hold documents (mostly PDFS). This field can hold study material, student scores or memos. Research the best way to handle such functionality. These documents can either be user-uploaded, staff-uploaded or admin-uploaded.
 
@@ -16,7 +17,7 @@ class Course(models.Model):
         return reverse('course_page', kwargs={'course_slug': self.slug})
     
     def get_assigned_lecturers(self):
-        pass
+        return self.lecturer_set.all()
 
 class DepartmentLevelCoursePack(models.Model):
     department = models.ForeignKey('department.Department', on_delete=models.SET_NULL, null=True)
