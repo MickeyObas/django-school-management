@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Welcome {{request.user.lecturer.prefix}}. {{request.user.last_name}}</h2>
+
+{% endblock content %}
+

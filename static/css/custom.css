@@ -14,7 +14,7 @@
 }
 
 .menu{
-   background-color: black;
+   background-color: blue;
    height: 50px;
    width: 100%;
    padding: 5px 10px
@@ -44,6 +44,10 @@
 .menu a:hover{
    color: black;
    background-color: white;
+}
+
+.menu.lecturer{
+   background-color: black;
 }
 
 .courseBox{

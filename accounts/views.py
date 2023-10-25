@@ -41,10 +41,15 @@ def login(request):
             else:
                 user.first_login = False
                 user.save()
-                return redirect("student_complete_profile")
+                if user.account_type == "S":
+                    return redirect("student_complete_profile")
+                elif user.account_type == "L":
+                    return redirect("lecturer_complete_profile")
+                else:
+                    raise ValueError("Invalid User Type")
         else:
             messages.error(request, "Invalid credentials.")
-            return redirect('login')
+            return redirect("login")
 
     return render(request, "accounts/login.html")
 

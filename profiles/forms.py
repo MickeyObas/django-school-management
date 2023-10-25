@@ -5,8 +5,7 @@ from .models import Student
 from department.models import Department
 
 
-class StudentCompleteProfileForm(forms.Form):
-
+class CompleteProfileForm(forms.Form):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
 
     # TODO Find a way to populate this using the actual list of departments available
@@ -17,7 +16,6 @@ class StudentCompleteProfileForm(forms.Form):
     middle_name = forms.CharField(disabled=True, required=False)
     gender = forms.ChoiceField(choices=GENDER_CHOICES)
     department = forms.ChoiceField(choices=DEPARTMENT_CHOICES)
-    level = forms.CharField(disabled=True, required=False)
     birthdate = forms.DateField()
     state_of_origin = forms.CharField(max_length=20)
     profile_picture = forms.ImageField()
@@ -31,3 +29,10 @@ class StudentCompleteProfileForm(forms.Form):
             raise ValidationError("Department does not exist")
         else:
             return passed_department_abbr
+
+
+class StudentCompleteProfileForm(CompleteProfileForm):
+    level = forms.CharField(disabled=True, required=False)
+    
+class LecturerCompleteProfileForm(CompleteProfileForm):
+    pass

@@ -64,7 +64,7 @@ class Student(BaseProfile):
 
 class Lecturer(BaseProfile):
     # TODO Add qualifications as a field.
-    prefix = models.CharField(max_length=10)
+    prefix = models.CharField(max_length=10, default='Prof')
     lecturer_id = models.CharField(
         max_length=256, default=f"lecture{random.randint(100, 1000)}"
     )

@@ -1,3 +1,4 @@
+{% if request.user.account_type == 'S' %}
 <div class="menu">
     <ul>
         <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
@@ -8,3 +9,15 @@
         <li><a href="{% url 'index_messages' %}">Messages</a></li>
     </ul>
 </div>
+{% else %}
+<div class="menu lecturer">
+    <ul>
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="">My Students</a></li>
+        <li><a href="">My Schedule</a></li>
+        <li><a href="">Messages</a></li>
+        <li><a href="">Attendance</a></li>
+    </ul>
+</div>
+{% endif %}
+
