@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% with courses=request.user.lecturer.courses_taught.all %}
+{% for course in courses %}
+<p><a href="">{{course.title}}</a></p>
+{% endfor %}
+{% endwith %}
+
+{% endblock %}

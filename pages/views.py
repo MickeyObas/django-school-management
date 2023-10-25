@@ -13,4 +13,7 @@ def dashboard(request):
         return render(request, "pages/dashboard.html")
     
 
+@login_required(login_url='login')
+def index_students(request):
+    return render(request, "pages/index_students.html")
 

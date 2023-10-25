@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import timezone
 
 from accounts.models import User
-from curriculum.models import Course
 from department.models import Department
 
 import random
@@ -70,7 +69,7 @@ class Lecturer(BaseProfile):
     )
     date_of_hire = models.DateTimeField(default=timezone.now)
     teaching_experience = models.IntegerField(default=4)
-    courses_taught = models.ManyToManyField(Course, blank=True)
+    courses_taught = models.ManyToManyField('curriculum.Course', blank=True)
 
     def __str__(self):
         if not self.prefix:

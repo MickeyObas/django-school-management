@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from profiles.models import Student
+
 class Course(models.Model):
     no_of_units = models.IntegerField(default=2)
     code = models.CharField(max_length=10, unique=True)
@@ -18,6 +20,24 @@ class Course(models.Model):
     
     def get_assigned_lecturers(self):
         return self.lecturer_set.all()
+    
+
+    # FIXME There is definitely a less expensive way to do this lmfao, but I just did this to test things
+    def get_students(self):
+        students = []
+        course_codes = []
+        for student in Student.objects.all():
+            if student.course_pack:
+                for course in student.course_pack.courses.all():
+                    course_codes.append(course.code)
+                if self.code in course_codes:
+                    students.append(student)
+            else:
+                # Student hasn't been assigned a course pack yet
+                pass
+                
+        return students
+
 
 class DepartmentLevelCoursePack(models.Model):
     department = models.ForeignKey('department.Department', on_delete=models.SET_NULL, null=True)
