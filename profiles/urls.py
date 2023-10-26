@@ -12,5 +12,10 @@ urlpatterns = [
         "lecturer_complete_profile",
         views.lecturer_complete_profile,
         name="lecturer_complete_profile",
-    )
+    ),
+    path(
+        "student_profile/<int:pk>",
+        views.student_profile_view,
+        name="student-profile-view",
+    ),
 ]

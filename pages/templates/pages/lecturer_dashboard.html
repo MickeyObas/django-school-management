@@ -3,5 +3,13 @@
 {% block content %}
 <h2>Welcome {{request.user.lecturer.prefix}}. {{request.user.last_name}}</h2>
 
+<div id="lecturer-index">
+    <img src="{{request.user.lecturer.profile_picture.url}}" alt="">
+    <p>Your Profile information: </p>
+    <p>Email Address: {{request.user.email}}</p>
+    <p>Department: {{request.user.lecturer.department}}</p>
+    
+</div>
+
 {% endblock content %}
 

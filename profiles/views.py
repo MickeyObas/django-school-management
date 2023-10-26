@@ -42,7 +42,7 @@ def student_complete_profile(request):
 
     context = {"form": form}
 
-    return render(request, "profiles/student_profile.html", context)
+    return render(request, "profiles/student_complete_profile.html", context)
 
 
 @login_required(login_url="login")
@@ -72,7 +72,7 @@ def lecturer_complete_profile(request):
             "first_name": lecturer_object.user.first_name,
             "last_name": lecturer_object.user.last_name,
             "middle_name": lecturer_object.user.middle_name,
-            "department": lecturer_object.department
+            "department": lecturer_object.department,
         }
 
         form = LecturerCompleteProfileForm(initial=initial_data)
@@ -80,3 +80,12 @@ def lecturer_complete_profile(request):
     context = {"form": form}
 
     return render(request, "profiles/student_profile.html", context)
+
+
+def student_profile_view(request, pk):
+
+    student = Student.objects.get(id=pk)
+
+    context = {"student": student}
+
+    return render(request, "profiles/student_profile_view.html", context)

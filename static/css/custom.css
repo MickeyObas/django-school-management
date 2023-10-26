@@ -85,3 +85,22 @@
    border: solid 1px black;
    text-align: center;
 }
+
+#lecturer-index{
+   padding: 20px;
+   margin-top: 10px;
+}
+
+.lecturer-course-box{
+   padding: 15px;
+   margin-top: 10px;
+}
+
+.lecturer-course-box a{
+   color: white;
+   padding: 5px 10px;
+   text-align: center;
+   background-color: green;
+   border-radius: 10px;
+}
+}

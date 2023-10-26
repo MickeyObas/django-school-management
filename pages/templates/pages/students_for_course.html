@@ -13,10 +13,14 @@
     {% for student in course.get_students %}
     <tr>
         <td>{{student.id}}</td>
-        <td>{{student.full_name}}</td>
+        <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
         <td>{{student.department}}</td>
         <td>{{student.level}}</td>
     </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4">No Students Enrolled Yet</td>
+        </tr>
     {% endfor %}
 </table>
 

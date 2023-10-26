@@ -11,31 +11,31 @@ from department.models import Department
 
 
 class Command(BaseCommand):
-    help = 'Populate students with fake data'
+    help = "Populate students with fake data"
 
-    DEPARTMENTS = [
-        'CSC',
-        'BMT',
-        'SEN'
-    ]
+    DEPARTMENTS = ["CSC", "BMT", "SEN"]
 
-    GENDERS = [
-        'M',
-        'F'
-    ]
+    GENDERS = ["M", "F"]
 
     def handle(self, *args, **kwargs):
 
         fake = Faker()
 
         for _ in range(30):
+
+            generated_first_name = fake.first_name()
+            generated_last_name = fake.last_name()
+            generated_email = (
+                f"{generated_last_name.lower()}{generated_first_name.lower()}@email.com"
+            )
+
             user = User.objects.create_user(
-                email=fake.email(),
-                password='Harobed20010420',
-                first_name = fake.first_name(),
-                last_name = fake.last_name(),
-                middle_name = fake.first_name(),
-                account_type = 'S'
+                email=generated_email,
+                password="Harobed20010420",
+                first_name=generated_first_name,
+                last_name=generated_last_name,
+                middle_name=fake.first_name(),
+                account_type="S",
             )
 
             student_profile = Student.objects.get(user=user)
@@ -45,8 +45,7 @@ class Command(BaseCommand):
             student_profile.save()
             student_profile.course_pack = get_student_pack(student_profile)
             student_profile.save()
-            
 
         # TODO Assert that this handle triggers the create_student_profile signal
 
-        self.stdout.write(self.style.SUCCESS('Sucessfully populated students.'))
+        self.stdout.write(self.style.SUCCESS("Sucessfully populated students."))

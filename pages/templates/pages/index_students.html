@@ -2,10 +2,15 @@
 
 {% block content %}
 
+<h2>Courses I Take</h2>
+
+<div class="lecturer-course-box">
 {% with courses=request.user.lecturer.courses_taught.all %}
 {% for course in courses %}
 <p><a href="{% url 'students_for_course' course.code %}">{{course.title}}</a></p>
 {% endfor %}
 {% endwith %}
+</div>
+
 
 {% endblock %}

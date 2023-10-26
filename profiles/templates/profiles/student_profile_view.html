@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>{{student.user.last_name}} {{student.user.first_name}}'s Profile</h1>
+
+{% if student.profile_picture %}
+<img src="{{student.profile_picture.url}}" alt="">
+{% else %}
+<img src="{% static 'assets\images\profile-img.png' %}" alt="" width="200">
+{% endif %}
+
+    <p>Current level: {{student.level}}</p>
+    <p>Department: {{student.department}}</p>
+    <p>Email Address: {{student.user.email}}</p> 
+
+{% endblock content %}

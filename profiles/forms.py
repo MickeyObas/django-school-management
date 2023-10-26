@@ -33,6 +33,7 @@ class CompleteProfileForm(forms.Form):
 
 class StudentCompleteProfileForm(CompleteProfileForm):
     level = forms.CharField(disabled=True, required=False)
-    
+
+
 class LecturerCompleteProfileForm(CompleteProfileForm):
     pass

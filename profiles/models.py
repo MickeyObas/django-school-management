@@ -30,7 +30,7 @@ class BaseProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-    
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         if self.profile_picture:
@@ -48,11 +48,13 @@ class BaseProfile(models.Model):
     @property
     def full_name(self):
         try:
-            return f"{self.user.last_name} {self.user.first_name} {self.user.middle_name}"
+            return (
+                f"{self.user.last_name} {self.user.first_name} {self.user.middle_name}"
+            )
         except Exception as e:
             print("Looks like you've deleted some user instances!")
             return "Deleted User"
-    
+
 
 class Student(BaseProfile):
     class LevelChoices(models.TextChoices):
@@ -65,19 +67,21 @@ class Student(BaseProfile):
     level = models.CharField(
         max_length=3, choices=LevelChoices.choices, default=LevelChoices.FIRST_YEAR
     )
-    
-    course_pack = models.ForeignKey('curriculum.DepartmentLevelCoursePack', on_delete=models.SET_NULL, null=True)
+
+    course_pack = models.ForeignKey(
+        "curriculum.DepartmentLevelCoursePack", on_delete=models.SET_NULL, null=True
+    )
 
 
 class Lecturer(BaseProfile):
     # TODO Add qualifications as a field.
-    prefix = models.CharField(max_length=10, default='Prof')
+    prefix = models.CharField(max_length=10, default="Prof")
     lecturer_id = models.CharField(
         max_length=256, default=f"lecture{random.randint(100, 1000)}"
     )
     date_of_hire = models.DateTimeField(default=timezone.now)
     teaching_experience = models.IntegerField(default=4)
-    courses_taught = models.ManyToManyField('curriculum.Course', blank=True)
+    courses_taught = models.ManyToManyField("curriculum.Course", blank=True)
 
     def __str__(self):
         if not self.prefix:

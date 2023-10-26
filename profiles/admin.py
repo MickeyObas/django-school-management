@@ -12,5 +12,5 @@ class StudentAdmin(admin.ModelAdmin):
 
 @admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
-    list_display = ['user', 'full_name', 'department', 'gender']
-    list_display_links= ['user']
+    list_display = ["user", "full_name", "department", "gender"]
+    list_display_links = ["user"]
