@@ -11,7 +11,7 @@ from PIL import Image
 
 class BaseProfile(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     profile_picture = models.ImageField(
         blank=True, null=True, upload_to="profile_picture"
     )
@@ -47,7 +47,11 @@ class BaseProfile(models.Model):
 
     @property
     def full_name(self):
-        return f"{self.user.last_name} {self.user.first_name} {self.user.middle_name}"
+        try:
+            return f"{self.user.last_name} {self.user.first_name} {self.user.middle_name}"
+        except Exception as e:
+            print("Looks like you've deleted some user instances!")
+            return "Deleted User"
     
 
 class Student(BaseProfile):
@@ -79,5 +83,9 @@ class Lecturer(BaseProfile):
         if not self.prefix:
             return super().__str__()
         else:
-            return f"{self.prefix}. {self.user.last_name} {self.user.first_name}"
+            try:
+                return f"{self.prefix}. {self.user.last_name} {self.user.first_name}"
+            except:
+                print("You have definitely deleted some lecturers user instances!")
+                return "Deleted user"
 # TODO Write script to bulk create users and profiles.
