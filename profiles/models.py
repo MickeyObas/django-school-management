@@ -45,6 +45,10 @@ class BaseProfile(models.Model):
         return 22
         # return (today.year - self.birthdate.year -((today.day, today.month) < (self.birthdate.day, self.birthdate.month)))
 
+    @property
+    def full_name(self):
+        return f"{self.user.last_name} {self.user.first_name} {self.user.middle_name}"
+    
 
 class Student(BaseProfile):
     class LevelChoices(models.TextChoices):

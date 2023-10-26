@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Student List for {{course.title}}</h1>
+<table id="studentList" style="width: 50%;">
+    <tr>
+        <th style="width: 20%;">Matric Number</th>
+        <th style="width: 40%;">Name</th>
+        <th style="width: 25%;">Department</th>
+        <th style="width: 15%;">Level</th>
+    </tr>
+    {% for student in course.get_students %}
+    <tr>
+        <td>{{student.id}}</td>
+        <td>{{student.full_name}}</td>
+        <td>{{student.department}}</td>
+        <td>{{student.level}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+// TODO Link back to individual student profiles

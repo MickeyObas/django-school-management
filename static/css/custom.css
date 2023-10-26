@@ -80,3 +80,8 @@
 .messageBox p{
    line-height: 10px;
 }
+
+#studentList, th, td{
+   border: solid 1px black;
+   text-align: center;
+}
