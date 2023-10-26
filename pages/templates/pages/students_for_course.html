@@ -12,7 +12,7 @@
     </tr>
     {% for student in course.get_students %}
     <tr>
-        <td>{{student.id}}</td>
+        <td>{{student.matric_number}}</td>
         <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
         <td>{{student.department}}</td>
         <td>{{student.level}}</td>

@@ -64,6 +64,10 @@ class Student(BaseProfile):
         FOURTH_YEAR = "400", "400 Level"
         FIFTH_YEAR = "500", "500 Level"
 
+
+    # Sample Matric Number: CSC/18/5843
+    matric_number = models.CharField(max_length=11, default="CSC/18/5843")
+
     level = models.CharField(
         max_length=3, choices=LevelChoices.choices, default=LevelChoices.FIRST_YEAR
     )

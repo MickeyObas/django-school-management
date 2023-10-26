@@ -1,5 +1,7 @@
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
+import time
 import random
 from faker import Faker
 
@@ -8,7 +10,6 @@ from profiles.models import Student
 from profiles.forms import StudentCompleteProfileForm
 from curriculum.utils import get_student_pack
 from department.models import Department
-
 
 class Command(BaseCommand):
     help = "Populate students with fake data"
@@ -20,6 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
         fake = Faker()
+        matric_index = 5800
 
         for _ in range(30):
 
@@ -28,6 +30,8 @@ class Command(BaseCommand):
             generated_email = (
                 f"{generated_last_name.lower()}{generated_first_name.lower()}@email.com"
             )
+
+            matric_index += 1
 
             user = User.objects.create_user(
                 email=generated_email,
@@ -44,6 +48,7 @@ class Command(BaseCommand):
             student_profile.department = Department.objects.get(abbreviation=abbr)
             student_profile.save()
             student_profile.course_pack = get_student_pack(student_profile)
+            student_profile.matric_number = f"{student_profile.department.abbreviation}/{time.strftime('%Y')[-2:]}/{matric_index}"
             student_profile.save()
 
         # TODO Assert that this handle triggers the create_student_profile signal
