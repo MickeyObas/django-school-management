@@ -88,4 +88,3 @@ class Lecturer(BaseProfile):
             except:
                 print("You have definitely deleted some lecturers user instances!")
                 return "Deleted user"
-# TODO Write script to bulk create users and profiles.

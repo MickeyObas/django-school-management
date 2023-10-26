@@ -25,9 +25,9 @@ class Course(models.Model):
     # FIXME There is definitely a less expensive way to do this lmfao, but I just did this to test things
     def get_students(self):
         students = []
-        course_codes = []
-        for student in Student.objects.all():
+        for student in Student.objects.order_by('department'):
             if student.course_pack:
+                course_codes = []
                 for course in student.course_pack.courses.all():
                     course_codes.append(course.code)
                 if self.code in course_codes:
@@ -37,7 +37,7 @@ class Course(models.Model):
                 pass
                 
         return students
-
+    
 
 class DepartmentLevelCoursePack(models.Model):
     department = models.ForeignKey('department.Department', on_delete=models.SET_NULL, null=True)
