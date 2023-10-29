@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Scoresheet for {{course.code}}</h1>
+<table id="studentList" style="width: 50%;">
+    <tr>
+        <th style="width: 15%;">Matric Number</th>
+        <th style="width: 30%;">Name</th>
+        <th style="width: 5%;">CA</th>
+        <th style="width: 5%;">Exam</th>
+        <th style="width: 5%;">Total</th>
+        <th style="width: 25%;">Department</th>
+        <th style="width: 15%;">Level</th>
+    </tr>
+    {% for student in course.get_students %}
+    <tr>
+        <td>{{student.matric_number}}</td>
+        <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
+        {% for student_course_grade in student.coursegrade_set.all %}
+        {% if student_course_grade.course.title == course.title %}
+        <td>{{student_course_grade.c_a_total}}</td>
+        <td>{{student_course_grade.exam_total}}</td>
+        <td>{{student_course_grade.overall}}</td>
+        {% endif %}
+        {% endfor %}
+        <td>{{student.department}}</td>
+        <td>{{student.level}}</td>
+    </tr>
+    {% empty %}
+        <tr>
+            <td colspan="4">No Students Enrolled Yet</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
