@@ -18,6 +18,9 @@ class Command(BaseCommand):
             for course in student.course_pack.courses.all():
                 try:
                     course_grade = CourseGrade.objects.get(student=student, course=course)
+                    course_grade.c_a_total = 0
+                    course_grade.exam_total = 0
+                    course_grade.save()
                 except:
                     course_grade = CourseGrade.objects.create(student=student, course=course)
                     course_grade.c_a_total = random.randint(1, CA_MAX)

@@ -1,17 +1,21 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
+import json
+
+from profiles.models import Student
 from curriculum.models import Course
+from grading.models import CourseGrade
 
 def index_grading(request):
 
     return render(request, "grading/index_grading.html")
 
 
-def course_grading(request, code):
+def display_course_grades(request, code):
 
     course = Course.objects.get(code=code)
-    # course_grades = Course.objects.filter(course=course)
+
 
     context = {
         "course": course
@@ -37,5 +41,23 @@ def course_grading_input(request, code):
 
 
 def save_student_course_grade(request):
-    print(request.body)
-    return JsonResponse("You try", safe=False)
+
+    data = json.loads(request.body)
+
+    print(data)
+
+    matric_number = data['matric_number']
+    course_code = data['course_code']
+    ca_score = data['ca_score']
+    exam_score = data['exam_score']
+
+    student = Student.objects.get(matric_number=matric_number)
+    course = Course.objects.get(code=course_code)
+
+    student_course_grade = CourseGrade.objects.get(student=student, course=course)
+    student_course_grade.c_a_total = ca_score
+    student_course_grade.exam_total = exam_score
+    student_course_grade.is_default = False
+    student_course_grade.save()
+
+    return JsonResponse(f"Student: {matric_number} score for {course} saved.", safe=False)

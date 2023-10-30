@@ -12,6 +12,7 @@ class CourseGrade(models.Model):
     c_a_total = models.PositiveSmallIntegerField('CA total', validators=[MaxValueValidator(40, "Continuous Assessment total cannot be more than 40 marks.")], default=0)
     exam_total = models.PositiveSmallIntegerField(validators=[MaxValueValidator(60,  "Exam total cannot be more than 60 marks.")], default=0)
     approved = models.BooleanField(default=False)
+    is_default = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Course Grade'

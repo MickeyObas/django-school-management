@@ -20,9 +20,15 @@
         <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
         {% for student_course_grade in student.coursegrade_set.all %}
         {% if student_course_grade.course.title == course.title %}
+        {% if student_course_grade.is_default %}
         <td><input type="number" name="" class="caScore" ></td>
         <td><input type="number" name="" class="examScore"></td>
         <td><input type="number" name="" class="totalScore" disabled></td>
+        {% else %}
+        <td>{{student_course_grade.c_a_total}}</td>
+        <td>{{student_course_grade.exam_total}}</td>
+        <td>{{student_course_grade.overall}}</td>
+        {% endif %}
         {% endif %}
         {% endfor %}
         <td>{{student.department}}</td>
@@ -83,8 +89,11 @@
                     'ca_score': caScore,
                     'exam_score': examSCore
                 })
-            }).then(response => {
-                console.log("Successful. Thumbs up!")
+            }).then(() => {
+                response.json()
+            }).then(data => {
+                console.log(data)
+                console.log(`${matricNumber} save successful.`)
             })
 
         })
