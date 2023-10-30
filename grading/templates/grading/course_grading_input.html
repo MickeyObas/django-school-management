@@ -21,7 +21,7 @@
         {% for student_course_grade in student.coursegrade_set.all %}
         {% if student_course_grade.course.title == course.title %}
         {% if student_course_grade.is_default %}
-        <td><input type="number" name="" class="caScore" ></td>
+        <td><input style="height: 100%; text-align: right" type="number" name="" class="caScore" ></td>
         <td><input type="number" name="" class="examScore"></td>
         <td><input type="number" name="" class="totalScore" disabled></td>
         {% else %}
@@ -76,6 +76,7 @@
         const url = "{% url 'save_student_course_grade' %}"
 
         button.addEventListener('click', (e) => {
+            // TODO Disable save function after score has been uploded and set button to pending
             e.preventDefault();
             const row = e.target.closest('tr');
             const matricNumber = row.dataset.studentId === button.dataset.matricnumber ? row.dataset.studentId : null

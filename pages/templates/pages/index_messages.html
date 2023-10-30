@@ -6,7 +6,7 @@
 {% for message in messages %}
 <div class="messageBox">
     <h3><a href="{% url 'view_message' message.id %}">{{message.title}}</a></h3>
-    <p>{{message.body}}</p>
+    <p>{{message.body|truncatewords:15}}</p>
     <small>{{message.timestamp|timesince}} ago</small>
     <br />
 </div>
