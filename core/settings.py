@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "messaging.apps.MessagingConfig",
     "pages.apps.PagesConfig",
     "grading.apps.GradingConfig",
+    "records.apps.RecordsConfig",
 
     # Third-party Apps
     "rest_framework",

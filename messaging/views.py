@@ -28,15 +28,15 @@ def view_message(request, pk):
 def send_message(request, pk):
 
     form = MessageForm()
+    recipient = User.objects.get(id=pk)
 
-    context = {"form": form}
+    context = {"form": form, "recipient": recipient}
 
     if request.method == "POST":
 
         form = MessageForm(request.POST)
-        recipient = User.objects.get(id=pk)
 
-        context.update({"form": form, "recipient": recipient})
+        context.update({"form": form})
 
         if form.is_valid():
             new_message = form.save(commit=False)
