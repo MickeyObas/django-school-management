@@ -6,26 +6,28 @@
 <table id="studentList" style="width: 50%;">
     <tr>
         <th style="width: 15%;">Matric Number</th>
-        <th style="width: 30%;">Name</th>
+        <th style="width: 25%;">Name</th>
         <th style="width: 5%;">CA</th>
         <th style="width: 5%;">Exam</th>
         <th style="width: 5%;">Total</th>
         <th style="width: 25%;">Department</th>
         <th style="width: 15%;">Level</th>
+        <th style="width: 5%;">Action</th>
     </tr>
     {% for student in course.get_students %}
-    <tr>
+    <tr data-student-id="{{student.matric_number}}">
         <td>{{student.matric_number}}</td>
         <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
         {% for student_course_grade in student.coursegrade_set.all %}
         {% if student_course_grade.course.title == course.title %}
-        <td><input type="number" name="" id=""></td>
-        <td><input type="number" name="" id=""></td>
-        <td><input type="number" name="" id=""></td>
+        <td><input type="number" name="" class="caScore" ></td>
+        <td><input type="number" name="" class="examScore"></td>
+        <td><input type="number" name="" class="totalScore" disabled></td>
         {% endif %}
         {% endfor %}
         <td>{{student.department}}</td>
         <td>{{student.level}}</td>
+        <td><button class="btn btn-success saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">Save</button></td>
     </tr>
     {% empty %}
         <tr>
@@ -34,4 +36,60 @@
     {% endfor %}
 </table>
 
+<script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    const saveButtons = document.getElementsByClassName('saveButton')
+
+    for(let button of saveButtons){
+
+        const url = "{% url 'save_student_course_grade' %}"
+
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            const row = e.target.closest('tr');
+            const matricNumber = row.dataset.studentId === button.dataset.matricnumber ? row.dataset.studentId : null
+            const courseCode = button.dataset.coursecode
+            const caScore = row.querySelector('.caScore').value;
+            const examSCore = row.querySelector('.examScore').value;
+            console.log(`Matric number: ${matricNumber}: Score saved!`)
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                    
+                },
+                body: JSON.stringify({
+                    'matric_number': matricNumber,
+                    'course_code': courseCode,
+                    'ca_score': caScore,
+                    'exam_score': examSCore
+                })
+            }).then(response => {
+                console.log("Successful. Thumbs up!")
+            })
+
+        })
+    }
+</script>
+
 {% endblock content %}
+

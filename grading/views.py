@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 
 from curriculum.models import Course
 
@@ -20,11 +21,21 @@ def course_grading(request, code):
 
 
 def course_grading_input(request, code):
+    print(code)
+    context = {}
 
-    course = Course.objects.get(code=code)
+    try:
+        course = Course.objects.get(code=code)
 
-    context = {
-        "course": course
-    }
+        context.update({"course": course})
+
+    except Exception as e:
+        print("Weird, ", e)
+        print(f"No course with code {code} exists.")
 
     return render(request, "grading/course_grading_input.html", context)
+
+
+def save_student_course_grade(request):
+    print(request.body)
+    return JsonResponse("You try", safe=False)
