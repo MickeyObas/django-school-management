@@ -29,12 +29,20 @@
         <td>{{student_course_grade.exam_total}}</td>
         <td>{{student_course_grade.overall}}</td>
         {% endif %}
-        {% endif %}
-        {% endfor %}
+        
         <td>{{student.department}}</td>
         <td>{{student.level}}</td>
-        <td><button class="btn btn-success saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">Save</button></td>
+        <td><button class="btn btn-success saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">
+            
+        {% if not student_course_grade.is_default %}    
+        Pending
+        {% else %}
+        Save
+        {% endif %}
+        </button></td>
     </tr>
+    {% endif %}
+    {% endfor %}
     {% empty %}
         <tr>
             <td colspan="4">No Students Enrolled Yet</td>
@@ -95,6 +103,8 @@
                 console.log(data)
                 console.log(`${matricNumber} save successful.`)
             })
+
+            window.location.reload();
 
         })
     }
