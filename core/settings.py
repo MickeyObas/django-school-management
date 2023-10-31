@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "pages.apps.PagesConfig",
     "grading.apps.GradingConfig",
     "records.apps.RecordsConfig",
+    "attendance.apps.AttendanceConfig",
 
     # Third-party Apps
     "rest_framework",

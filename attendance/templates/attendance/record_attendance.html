@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Attendance List for {{course.title}}</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <table>
+    <thead>
+        <tr>
+            <th>Matric No</th>
+            <th>Name</th>
+            <th>Present</th>
+            <th>Absent</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in course.get_students %}
+        <tr>
+            <td>{{student.matric_number}}</td>
+            <td>{{student.full_name}}</td>
+            <td>
+                <input type="radio" name="attendance_{{student.id}}" value="P">
+            </td>
+            <td>
+                <input style="color:red"  type="radio" name="attendance_{{student.id}}" value="A">
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <input id="saveBtn" type="submit" class="btn btn-primary" value="Save Attendance Sheet">
+</form>
+
+<script>
+    const saveBtn = document.getElementById('saveBtn');
+    saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("Attendance uploaded.")
+        window.location.href = "{% url 'index_attendance' %}"
+    })
+</script>
+
+{% endblock content %}
+

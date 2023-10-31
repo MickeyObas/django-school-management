@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Attendance Tracking </h2>
+<p>Choose a course</p>
+
+{% for course in request.user.lecturer.courses_taught.all %}
+<p>
+    <a href="{% url 'record_attendance' course.code %}" class="btn btn-secondary">{{course.title}}</a>
+</p>
+{% endfor %}
+
+{% endblock content %}

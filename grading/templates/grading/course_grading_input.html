@@ -21,19 +21,17 @@
         {% for student_course_grade in student.coursegrade_set.all %}
         {% if student_course_grade.course.title == course.title %}
         {% if student_course_grade.is_default %}
-        <td><input style="height: 100%; text-align: right" type="number" name="" class="caScore" ></td>
+        <td><input type="number" name="" class="caScore"></td>
         <td><input type="number" name="" class="examScore"></td>
-        <td><input type="number" name="" class="totalScore" disabled></td>
+        <td class="overallScore"></td>
         {% else %}
         <td>{{student_course_grade.c_a_total}}</td>
         <td>{{student_course_grade.exam_total}}</td>
         <td>{{student_course_grade.overall}}</td>
         {% endif %}
-        
         <td>{{student.department}}</td>
         <td>{{student.level}}</td>
         <td><button class="btn btn-success saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">
-            
         {% if not student_course_grade.is_default %}    
         Pending
         {% else %}
@@ -82,7 +80,7 @@
             const matricNumber = row.dataset.studentId === button.dataset.matricnumber ? row.dataset.studentId : null
             const courseCode = button.dataset.coursecode
             const caScore = row.querySelector('.caScore').value;
-            const examSCore = row.querySelector('.examScore').value;
+            const examScore = row.querySelector('.examScore').value;
             console.log(`Matric number: ${matricNumber}: Score saved!`)
 
             fetch(url, {
@@ -96,13 +94,15 @@
                     'matric_number': matricNumber,
                     'course_code': courseCode,
                     'ca_score': caScore,
-                    'exam_score': examSCore
+                    'exam_score': examScore
                 })
-            }).then(() => {
+            }).then((response) => {
                 response.json()
             }).then(data => {
                 console.log(data)
                 console.log(`${matricNumber} save successful.`)
+            }).catch((e) => {
+                console.log("An error occured with the upload.")
             })
 
             window.location.reload();
