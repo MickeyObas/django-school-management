@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Attendance List for {{course.title}}</h1>
+<h2>Date: {% now 'l, jS F Y'%}</h2>
 
 <form action="" method="post">
     {% csrf_token %}
