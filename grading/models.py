@@ -23,6 +23,22 @@ class CourseGrade(models.Model):
     def overall(self):
         return self.c_a_total + self.exam_total
     
+    @property
+    def grade_letter(self):
+        if 70 <= self.overall <= 100:
+            return 'A'
+        elif 60 <= self.overall <= 69:
+            return 'B'
+        elif 50 <= self.overall <= 59:
+            return 'C'
+        elif 45 <= self.overall <= 49:
+            return 'D'
+        elif 0 <= self.overall <= 44:
+            return 'F'
+        else:
+            return "Invalid Score"
+
+    
     # NOTE For admin display purposes only
     @property
     def student_matric_number(self):

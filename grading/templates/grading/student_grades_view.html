@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<table>
+    <thead>
+        <th>Course</th>
+        <th>Score</th>
+        <th>Grade</th>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+        <tr>
+            <td>{{grade.course}}</td>
+            <td>{{grade.overall}}</td>
+            <td>{{grade.grade_letter}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}

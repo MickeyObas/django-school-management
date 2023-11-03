@@ -26,3 +26,18 @@ def record_attendance(request, code):
                 StudentAttendance.objects.create(student=student, status=value)
 
     return render(request, "attendance/record_attendance.html", context)
+
+
+def student_attendance_view(request):
+
+    student_object = Student.objects.get(user=request.user)
+
+    student_attendance_records = StudentAttendance.objects.filter(student=student_object)
+
+    print(student_attendance_records)
+
+    context = {
+        "student_attendance_records": student_attendance_records
+    }
+
+    return render(request, "attendance/student_attendance_view.html", context)

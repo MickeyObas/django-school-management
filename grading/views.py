@@ -61,3 +61,15 @@ def save_student_course_grade(request):
     student_course_grade.save()
 
     return JsonResponse(f"Student: {matric_number} score for {course} saved.", safe=False)
+
+
+def student_grades_view(request):
+    
+    student = Student.objects.get(user=request.user)
+    grades = CourseGrade.objects.filter(student=student)
+
+    context = {
+        "grades": grades
+    }
+
+    return render(request, "grading/student_grades_view.html", context)

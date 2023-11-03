@@ -51,3 +51,11 @@ def send_message(request, pk):
             messages.error(request, "Form filled incorrectly. Try again.")
 
     return render(request, "pages/send_message.html", context)
+
+
+def send_message_to_multiple_users(request):
+
+    if request.method == 'POST':
+        pass
+
+    pass

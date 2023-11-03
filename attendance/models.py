@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from profiles.models import Student, Lecturer
+from curriculum.models import Course
 
 
 class StudentAttendance(models.Model):
@@ -14,11 +15,12 @@ class StudentAttendance(models.Model):
     # FIXME: Keep attendance record even after student gets deleted.
     date = models.DateField(default=timezone.now)
     status = models.CharField(max_length=1, choices=Status.choices)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=2)
     comment = models.TextField(max_length=256, blank=True, null=True)
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['student', 'date'], name="one-attendance-per-date")
+            models.UniqueConstraint(fields=['student', 'date', 'course'], name="one-attendance-per-date")
         ]
         verbose_name = "StudentAttendance item"
         verbose_name_plural = "StudentAttendance items"
