@@ -38,7 +38,7 @@ class CourseGrade(models.Model):
         else:
             return "Invalid Score"
 
-    
+
     # NOTE For admin display purposes only
     @property
     def student_matric_number(self):

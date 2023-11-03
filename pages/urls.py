@@ -10,5 +10,5 @@ urlpatterns = [
     path("records/", include("records.urls")),
     path("attendance/", include('attendance.urls')),
     path("students/", views.index_students, name="index_students"),
-    path("students/<str:code>", views.students_for_course, name="students_for_course"),
+    path("students/<str:code>", views.course_students, name="students_for_course"),
 ]

@@ -4,7 +4,7 @@ from .models import Course
 
 
 def index_curriculum(request):
-    return render(request, "pages/curriculum.html")
+    return render(request, "pages/index_curriculum.html")
 
 def course_page(request, course_slug):
 
@@ -14,4 +14,4 @@ def course_page(request, course_slug):
         "course": course
     }
 
-    return render(request, 'pages/course_page.html', context)
+    return render(request, 'curriculum/course_page.html', context)
