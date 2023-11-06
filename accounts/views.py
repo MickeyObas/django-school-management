@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib import messages
-from .models import *
-from core.decorators import already_logged_in
-from .forms import CustomUserCreationForm
 from django.contrib.auth.decorators import login_required
 
+from .models import *
+from .forms import CustomUserCreationForm
+from .decorators import already_logged_in
 
+
+@already_logged_in
 def register(request):
 
     form = CustomUserCreationForm()
@@ -27,6 +29,7 @@ def register(request):
     return render(request, "accounts/register.html", context)
 
 
+@already_logged_in
 def login(request):
     if request.method == "POST":
         email = request.POST.get("email")
@@ -58,11 +61,3 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect("login")
-
-
-def already_logged_in(view_func):
-    def wrapper(request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return view_func(request, *args, **kwargs)
-        else:
-            return redirect("login")

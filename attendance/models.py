@@ -22,6 +22,12 @@ class StudentAttendance(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['student', 'date', 'course'], name="one-attendance-per-date")
         ]
+        permissions = [
+            (
+                "view_student_attendance",
+                "Can view the attendance records of students taking a particular course"
+            )
+        ]
         verbose_name = "StudentAttendance item"
         verbose_name_plural = "StudentAttendance items"
 

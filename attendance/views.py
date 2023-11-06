@@ -1,13 +1,19 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import user_passes_test
 
 from .models import StudentAttendance
 from profiles.models import Student
 from curriculum.models import Course
+from accounts.permission_handlers.basic import is_lecturer
 
 
+# Only Lecturers teaching a particular course should have access to the attendance sheets
+
+@user_passes_test(is_lecturer, login_url='dashboard')
 def index_attendance(request):
     return render(request, "attendance/index_attendance.html")
 
+# Only allow lecturers taking a particular course to record the attendance for such course.
 def record_attendance(request, code):
 
     course = Course.objects.get(code=code)

@@ -103,4 +103,13 @@
    background-color: green;
    border-radius: 10px;
 }
+
+
+/* LOGIN PAGE */
+
+.login-body{
+   background: url('../assets/images/background3.jpg');
+   background-position: center;
+   background-size: cover;
+   background-repeat: no-repeat;
 }
