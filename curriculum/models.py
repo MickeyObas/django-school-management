@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from profiles.models import Student
 
+
 class Course(models.Model):
     no_of_units = models.IntegerField(default=2)
     code = models.CharField(max_length=10, unique=True)
@@ -14,18 +15,17 @@ class Course(models.Model):
 
     def __str__(self):
         return self.code
-    
+
     def get_absolute_url(self):
-        return reverse('course_page', kwargs={'course_slug': self.slug})
-    
+        return reverse("course_page", kwargs={"course_slug": self.slug})
+
     def get_assigned_lecturers(self):
         return self.lecturer_set.all()
-    
 
     # FIXME There is definitely a less expensive way to do this lmfao, but I just did this to test things
     def get_students(self):
         students = []
-        for student in Student.objects.order_by('department'):
+        for student in Student.objects.order_by("department"):
             if student.course_pack:
                 course_codes = []
                 for course in student.course_pack.courses.all():
@@ -35,18 +35,22 @@ class Course(models.Model):
             else:
                 # Student hasn't been assigned a course pack yet
                 pass
-                
+
         return students
-    
+
 
 class DepartmentLevelCoursePack(models.Model):
-    department = models.ForeignKey('department.Department', on_delete=models.SET_NULL, null=True)
+    department = models.ForeignKey(
+        "department.Department", on_delete=models.SET_NULL, null=True
+    )
     level = models.CharField(max_length=3)
     courses = models.ManyToManyField(Course)
 
     class Meta:
-        verbose_name = 'DepartmentLevelCoursePack'
-        verbose_name_plural = 'DepartmentLevelCoursePacks'
+        verbose_name = "DepartmentLevelCoursePack"
+        verbose_name_plural = "DepartmentLevelCoursePacks"
 
     def __str__(self):
-        return f"Course pack for {self.level} level {self.department} department students"
+        return (
+            f"Course pack for {self.level} level {self.department} department students"
+        )

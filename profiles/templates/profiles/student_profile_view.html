@@ -16,6 +16,9 @@
     <p>Department: {{student.department}}</p>
     <p>Email Address: {{student.user.email}}</p> 
     <br>
+
+    {% if request.user.account_type == 'L' %}
     <p style="font-weight: bold;">Send {{student.user.last_name}} {{student.user.first_name}} a <span><a href="{% url 'send_message' student.user.id %}">message</a>.</span></p>
+    {% endif %}
 
 {% endblock content %}

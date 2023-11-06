@@ -11,6 +11,7 @@ from profiles.forms import StudentCompleteProfileForm
 from curriculum.utils import get_student_pack
 from department.models import Department
 
+
 class Command(BaseCommand):
     help = "Populate students with fake data"
 

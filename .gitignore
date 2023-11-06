@@ -4,3 +4,4 @@ __pycache__
 myenv
 migrations
 media
+build.txt

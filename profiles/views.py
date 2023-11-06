@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required, user_passes_test
 
-from .forms import StudentCompleteProfileForm, LecturerCompleteProfileForm
 from .models import Student, Lecturer
 from department.models import Department
+from .forms import StudentCompleteProfileForm, LecturerCompleteProfileForm
+from accounts.permission_handlers.basic import is_student, is_lecturer
 
 
+@user_passes_test(is_student, login_url="dashboard", redirect_field_name=None)
 @login_required(login_url="login")
 def student_complete_profile(request):
 
@@ -45,6 +48,7 @@ def student_complete_profile(request):
     return render(request, "profiles/student_complete_profile.html", context)
 
 
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
 @login_required(login_url="login")
 def lecturer_complete_profile(request):
 
@@ -82,9 +86,14 @@ def lecturer_complete_profile(request):
     return render(request, "profiles/student_profile.html", context)
 
 
+@login_required(login_url="login")
+# FIXME Students should have a dedicated profile view different from lecturers.
 def student_profile_view(request, pk):
 
     student = Student.objects.get(id=pk)
+
+    if not student.user == request.user and not request.user.account_type == "L":
+        return HttpResponseForbidden("Begone! You cannot perform this action!")
 
     context = {"student": student}
 

@@ -5,7 +5,7 @@ from .models import Message, MessageNotififcation
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ["sender", "recipient", "title", "timestamp"]
+    list_display = ["id", "sender", "recipient", "title", "timestamp"]
     list_display_links = ["sender", "recipient"]
     list_filter = ["sender"]
 

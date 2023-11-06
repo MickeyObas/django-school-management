@@ -20,12 +20,8 @@ class StudentAttendance(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['student', 'date', 'course'], name="one-attendance-per-date")
-        ]
-        permissions = [
-            (
-                "view_student_attendance",
-                "Can view the attendance records of students taking a particular course"
+            models.UniqueConstraint(
+                fields=["student", "date", "course"], name="one-attendance-per-date"
             )
         ]
         verbose_name = "StudentAttendance item"
@@ -33,6 +29,4 @@ class StudentAttendance(models.Model):
 
     def __str__(self):
 
-        return (
-            f"{self.student.user.first_name} was {self.get_status_display()} on {self.date}"
-        )
+        return f"{self.student.user.first_name} was {self.get_status_display()} on {self.date}"

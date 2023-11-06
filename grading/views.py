@@ -1,58 +1,76 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, Http404
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 import json
 
 from profiles.models import Student
 from curriculum.models import Course
 from grading.models import CourseGrade
+from accounts.permission_handlers.basic import is_student, is_lecturer
 
+# NOTE For now, any lecturer that takes a course can record grades. Later, however, I must enforce a rule where only certain lecturers are given grading duties.
+
+
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def index_grading(request):
 
     return render(request, "grading/index_grading.html")
 
 
+# TODO Handle route to this view
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def display_course_grades(request, code):
 
-    course = Course.objects.get(code=code)
+    try:
+        course = Course.objects.get(code=code)
+    except Course.DoesNotExist:
+        return Http404("Whoops. There is no such course.")
 
+    context = {"course": course}
 
-    context = {
-        "course": course
-    }
+    if course not in request.user.lecturer.courses_taught.all():
+        return HttpResponseForbidden("<h1>Begone! You are not allowed here!!</h1>")
 
     return render(request, "grading/course_grading.html", context)
 
 
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def course_grading_input(request, code):
-    print(code)
+
     context = {}
 
     try:
         course = Course.objects.get(code=code)
-
         context.update({"course": course})
+    except Course.DoesNotExist:
+        return Http404("Error 404. There is no such course")
 
-    except Exception as e:
-        print("Weird, ", e)
-        print(f"No course with code {code} exists.")
+    if course not in request.user.lecturer.courses_taught.all():
+        return HttpResponseForbidden("<h1>Begone! You are not allowed here!!</h1>")
 
     return render(request, "grading/course_grading_input.html", context)
 
 
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def save_student_course_grade(request):
 
     data = json.loads(request.body)
 
-    print(data)
-
-    matric_number = data['matric_number']
-    course_code = data['course_code']
-    ca_score = data['ca_score']
-    exam_score = data['exam_score']
+    matric_number = data["matric_number"]
+    course_code = data["course_code"]
+    ca_score = data["ca_score"]
+    exam_score = data["exam_score"]
 
     student = Student.objects.get(matric_number=matric_number)
     course = Course.objects.get(code=course_code)
+
+    if course not in request.user.lecturer.courses_taught.all():
+        return HttpResponseForbidden("Begone! You cannot perform this action!")
 
     student_course_grade = CourseGrade.objects.get(student=student, course=course)
     student_course_grade.c_a_total = ca_score
@@ -60,16 +78,18 @@ def save_student_course_grade(request):
     student_course_grade.is_default = False
     student_course_grade.save()
 
-    return JsonResponse(f"Student: {matric_number} score for {course} saved.", safe=False)
+    return JsonResponse(
+        f"Student: {matric_number} score for {course} saved.", safe=False
+    )
 
 
+@user_passes_test(is_student, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def student_grades_view(request):
-    
+
     student = Student.objects.get(user=request.user)
     grades = CourseGrade.objects.filter(student=student)
 
-    context = {
-        "grades": grades
-    }
+    context = {"grades": grades}
 
     return render(request, "grading/student_grades_view.html", context)

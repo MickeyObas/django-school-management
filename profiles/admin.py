@@ -6,6 +6,7 @@ from .models import Student, Lecturer
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = [
+        "id",
         "matric_number",
         "user",
         "gender",
