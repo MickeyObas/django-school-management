@@ -1,23 +1,76 @@
-{% extends 'base.html' %}
+{% extends 'base.html'%}
+
+{% load static %}
+
+{% block background_image %}{% static 'assets/images/books.jpg' %}{% endblock background_image %}
 
 {% block content %}
 
+    <!-- Grades Section -->
+    <section>
+        <div class="container">
+            <div class="row pt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-body-secondary">
+                            <h3 class="text-center fw-bold">My Results</h3>
+                        </div>
+                        <div class="card-body results__box">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Course</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                                <tr>
+                                    <td>CSC 101</td>
+                                    <td>74</td>
+                                    <td>A</td>
+                                </tr>
+                            </table>
+                            <a href="" class="btn btn-primary w-100 mt-3">Print Result</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<table>
-    <thead>
-        <th>Course</th>
-        <th>Score</th>
-        <th>Grade</th>
-    </thead>
-    <tbody>
-        {% for grade in grades %}
-        <tr>
-            <td>{{grade.course}}</td>
-            <td>{{grade.overall}}</td>
-            <td>{{grade.grade_letter}}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-{% endblock content %}
+    {% endblock content %}

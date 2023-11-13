@@ -1,14 +1,69 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block background_image %}{% static 'assets/images/school-25.jpg' %}{% endblock background_image %}
+
 {% block content %}
 
-<h2>{{course.code}} | {{course.title}}</h2>
-<hr>
-<h2>Lecturer(s) in charge</h2>
-{% for lecturer in course.get_assigned_lecturers %}
-<p>{{lecturer}}</p>
-{% empty %}
-<p>No Lecturer Assigned Yet</p>
-{% endfor %}
-
-{% endblock %}
+<!-- Course Section -->
+<section>
+    <div class="container">
+        <div class=" pt-4 row d-flex justify-content-between">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body course__col">
+                        <div class="card-text">
+                            <h1>{{course.code}}</h1>
+                            <p>{{course.no_of_units}} Units</p>
+                            <p>{{course.description}}</p>
+                            <div>
+                                <h5>Lecturers In Charge</h5>
+                                {% for lecturer in course.get_assigned_lecturers %}
+                                <div>{{lecturer}}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header bg-success-subtle text-center"><h3>Course Outline</h3></div>
+                    <div class="card-body course__outline__col text-center">
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    <div class="course__item mb-2">
+                        <div class="course__week fw-bold">Week 1</div>
+                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    
+{% endblock content %}

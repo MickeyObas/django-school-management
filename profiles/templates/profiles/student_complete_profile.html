@@ -5,13 +5,60 @@
 {% block content %}
 
 
-<p>Pretend this is a good looking form lmao</p>
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <!-- TODO Wrap this into a form snippet for rendering -->
-    {{form.as_p}}
-    <button>Save</button>
-</form>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="row h-50 w-100 d-flex align-items-center justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <h3 class="text-center fw-bold mt-2">COMPLETE PROFILE</h3>
+                    <p class="text-center mb-3">Hurray, You're almost done!</p>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.first_name.id_for_label}}">First Name</label>
+                                    {{form.first_name}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.last_name.id_for_label}}">Last Name</label>
+                                    {{form.last_name}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.middle_name.id_for_label}}">Middle Name</label>
+                                    {{form.middle_name}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.gender.id_for_label}}">Gender</label>
+                                    {{form.gender}}
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.department.id_for_label}}">Department</label>
+                                    {{form.department}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.birthdate.id_for_label}}">Birthdate</label>
+                                    {{form.birthdate}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.first_name.id_for_label}}">State of Origin</label>
+                                    {{form.state_of_origin}}
+                                </div>
+                                <div class="fieldWrapper mb-3">
+                                    <label for="{{form.profile_picture.id_for_label}}">Profile Picture</label>
+                                    {{form.profile_picture}}
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="Save" class="btn btn-success mt-4 w-100 mx-auto">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 

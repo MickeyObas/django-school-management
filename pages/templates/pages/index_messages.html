@@ -1,17 +1,108 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-<h2>My Messages</h2>
-{% if messages %}
-{% for message in messages %}
-<div class="messageBox">
-    <h3><a href="{% url 'view_message' message.id %}">{{message.title}}</a></h3>
-    <p>{{message.body|truncatewords:15}}</p>
-    <small>{{message.timestamp|timesince}} ago</small>
-    <br />
-</div>
-{% empty %}
-<p>No Messages Yet</p>
-{% endfor %}
-{% endif %}
-{% endblock content %}
+
+{% block background_image %}{% static 'assets/images/mail.png' %}{% endblock background_image %}
+
+
+    <!-- Messages Section -->
+    <section class="pt-2 pt-md-5">
+        <div class="container">
+            <div class="row d-flex justify-content-between">
+                <div class="col-md-8 mb-3 mb-md-0">
+                    <div class="card">
+                        <div class="card-header bg-success-subtle">
+                            <h3>Messages</h3>
+                        </div>
+                        <div class="card-body bg-body-tertiary mailbox__container p-0">
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+                            <div class="message__container mb-2 mb-md-1">
+                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
+                                <div class="message__item">
+                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
+                                    <div class="message__title">Message Title</div>
+                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-success-subtle text-center">
+                            <h4>Mailbox</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="mailbox__field">
+                                <span>Inbox</span>
+                            </div>
+                            <div class="mailbox__field">
+                                <span>Starred</span>
+                            </div>
+                            <div class="mailbox__field">
+                                <span>Important</span>
+                            </div>
+                            <div class="mailbox__field">
+                                <span>Spam</span>
+                            </div>
+                            <div class="mailbox__field">
+                                <span>Sent</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    {% endblock content  %}

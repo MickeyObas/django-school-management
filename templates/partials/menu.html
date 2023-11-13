@@ -1,24 +1,36 @@
-{% if request.user.account_type == 'S' %}
-<div class="menu">
-    <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="{% url 'index_curriculum' %}">Curriculum</a></li>
-        <li><a href="">Payments</a></li>
-        <!-- TODO Make the school calendar visible on the main dashboard. -->
-        <!-- <li><a href="">Calendar</a></li> -->
-        <li><a href="{% url 'index_records' %}">Records</a></li>
-        <li><a href="{% url 'index_messages' %}">Messages</a></li>
-    </ul>
-</div>
-{% else %}
-<div class="menu lecturer">
-    <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="{% url 'index_students' %}">My Students</a></li>
-        <li><a href="{% url 'index_grading' %}">Grading</a></li>
-        <li><a href="{% url 'index_messages' %}">Messages</a></li>
-        <li><a href="{% url 'index_attendance' %}">Attendance</a></li>
-    </ul>
-</div>
-{% endif %}
+<!-- Navbar -->
+<section>
+    <nav class="navbar navbar-expand-lg bg-body-secondary">
+        <div class="container">
+            <h2 class="navbar-brand">Welcome, {{request.user.full_name}}</h2>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="{% url 'dashboard' %}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'index_curriculum' %}" class="nav-link">Curriculum</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'index_messages' %}" class="nav-link">Messages</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Records</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'student_attendance_view' %}" class="dropdown-item">Attendance</a></li>
+                            <li><a href="{% url 'student_grades_view' %}" class="dropdown-item">Grades</a></li>
+                            <li><a href="" class="dropdown-item">Uploads</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</section>
 

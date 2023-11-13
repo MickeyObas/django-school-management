@@ -35,7 +35,7 @@ class BaseProfile(models.Model):
         super().save(*args, **kwargs)
         if self.profile_picture:
             img = Image.open(self.profile_picture.path)
-            max_size = (120, 120)
+            max_size = (300, 300)
             img.thumbnail(max_size)
             img.save(self.profile_picture.path)
 

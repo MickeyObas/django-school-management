@@ -1,20 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %} My Curriculum {% endblock title %}
+{% load static %}
+
+{% block background_image %}{% static 'assets/images/school-25.jpg' %}{% endblock background_image %}
 
 {% block content %}
 
+    <!-- Courses -->
+    <section class="">
+        <div class="container">
+            <div class="row pt-3 d-flex justify-content-center mt-md-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header"><h3 class="display-4 text-center">My Courses</h3></div>
+                        <div class="card-body text-center">
+                            {% if request.user.student.course_pack %}
+                            <ul class="list-unstyled">
+                                {% for course in request.user.student.course_pack.courses.all %}
+                                <li class=""><a href="{% url 'course_page' course.slug %}" class="btn btn-success text-center mb-3 w-100"><span class="fw-bold">{{course.code}}</span>: {{course.title}}</a></li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p>No Course Registered Yet</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="courseBox">
-    <h2>My Courses</h2>
-    {% with courses=request.user.student.course_pack.courses.all %}
-    {% for course in courses %}
-    <div class="courseItem">
-        <p class="courseCode"><a href="{{course.get_absolute_url}}">{{course.code}}</a></p>
-        <p class="courseTitle">{{course.title}}</p>
-    </div>
-    {% endfor %}
-    {% endwith %}
-</div>
-
-{% endblock content %}
+{% endblock %}

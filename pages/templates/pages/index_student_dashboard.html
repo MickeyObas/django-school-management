@@ -1,18 +1,79 @@
 {% extends 'base.html' %}
 
-{% block title %} Dashboard {% endblock title %}
+{% load static %}
 
 {% block content %}
 
-    <h1>Welcome, {{request.user.last_name | upper}} {{request.user.first_name}} {{request.user.middle_name}}.</h1>
-    <br>
-    <img src="{{request.user.student.profile_picture.url}}" alt="">
-    <p>Your profile information</p>
-    <p>Current level: {{request.user.student.level}}</p>
-    <p>Department: {{request.user.student.department}}</p>
-    <p>Email Address: {{request.user.email}}</p> 
-    <p><a href="">My Grades</a></p>
-    
-    <a href="{% url 'logout' %}">Logout</a>
+    <!-- Main Content -->
+
+    <section id="main" class="bg-tertiary pt-3">
+        <div class="container">
+            <div class="row py-3 vh-50">
+                <div class="col-md-3 border-1">
+                    {% if request.user.student.profile_picture %}
+                    <img src="{{request.user.student.profile_picture.url}}" alt="" class="img-fluid profile_picture">
+                    {% else %}
+                    <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <h3>Profile Information</h3>
+                    <div class="row mb-2">
+                        <div class="col-4 col-md-3">{{request.user.student.matric_number}}</div>
+                        <div class="col-4 col-md-3">{{request.user.student.department}}</div>
+                        <div class="col-4 col-md-3">{{request.user.student.level}} Level</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 col-md-3">{{request.user.student.birthdate}}</div>
+                        <div class="col-4 col-md-3">{{request.user.student.state_of_origin}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Panel -->
+    <section>
+        <div class="container">
+            <div class="row g-3 py-md-3">
+                <div class="col-md">
+                    <div class="img-container">
+                        <img src="{% static 'assets/images/calendar.jpg' %}" alt="" class="img-fluid img">
+                        <div class="img__overlay">
+                            <div class="img__title">Calendar</div>
+                            <p class="img__description">View your school calendar.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="img-container">
+                        <img src="{% static 'assets/images/school-11.jpg' %}" alt="" class="img-fluid">
+                        <div class="img__overlay">
+                            <div class="img__title">Assignments</div>
+                            <p class="img__description">Keep track of your assignments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="img-container">
+                        <img src="{% static 'assets/images/school-24.jpg' %}" alt="" class="img-fluid">
+                        <div class="img__overlay">
+                            <div class="img__title">News</div>
+                            <p class="img__description">Stay up to date with happenings.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- Footer -->
+    <section class="">
+        <div class="container">
+            <div class="row">
+                
+            </div>
+        </div>
+    </section>
 
 {% endblock content %}

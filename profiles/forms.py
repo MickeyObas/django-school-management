@@ -16,9 +16,9 @@ class CompleteProfileForm(forms.Form):
     middle_name = forms.CharField(disabled=True, required=False, widget=forms.TextInput(attrs={"class":  "form-control"}))
     gender = forms.ChoiceField(choices=GENDER_CHOICES, widget=forms.Select(attrs={"class": "form-select"}))
     department = forms.ChoiceField(choices=DEPARTMENT_CHOICES, widget=forms.Select(attrs={"class": "form-select"}))
-    birthdate = forms.DateField()
+    birthdate = forms.DateField(widget=forms.DateInput(attrs={"class": "form-control", "type": "date"}))
     state_of_origin = forms.CharField(max_length=20, widget=forms.TextInput(attrs={"class":  "form-control"}))
-    profile_picture = forms.ImageField(widget=forms.FileInput(attrs={"class": "form-select"}))
+    profile_picture = forms.ImageField(widget=forms.FileInput(attrs={"class": "form-control", "type": "file"}))
 
     def clean_department(self):
         passed_department_abbr = self.cleaned_data["department"]
@@ -32,7 +32,8 @@ class CompleteProfileForm(forms.Form):
 
 
 class StudentCompleteProfileForm(CompleteProfileForm):
-    level = forms.CharField(disabled=True, required=False)
+    level = forms.CharField(disabled=True, required=False, widget=forms.NumberInput(attrs={"class": "form-control"}))
+
 
 
 class LecturerCompleteProfileForm(CompleteProfileForm):

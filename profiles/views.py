@@ -30,6 +30,7 @@ def student_complete_profile(request):
             return redirect("dashboard")
         else:
             messages.error(request, "An error occured whilst filling the form")
+            return redirect('student_complete_profile')
 
     else:
 
