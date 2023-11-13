@@ -9,7 +9,7 @@ from curriculum.models import Course
 from grading.models import CourseGrade
 from accounts.permission_handlers.basic import is_student, is_lecturer
 
-# NOTE For now, any lecturer that takes a course can record grades. Later, however, I must enforce a rule where only certain lecturers are given grading duties.
+# NOTE For now, any lecturer that takes a course can record grades. Later, however, I must enforce a rule where only certain lecturers of a course are given grading duties.
 
 
 @user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)

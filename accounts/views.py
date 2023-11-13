@@ -11,22 +11,28 @@ from .decorators import already_logged_in
 @already_logged_in
 def register(request):
 
-    form = CustomUserCreationForm()
+    if request.method == 'POST':
+        account_type = request.POST.get('account_type')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        middle_name = request.POST.get('middle_name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
 
-    context = {"form": form}
-
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("login")
-        else:
-            print("Bad form.")
-            return messages.error(
-                request, "Form filled incorrectly. Please do try again."
-            )
-
-    return render(request, "accounts/register.html", context)
+        if password1 != password2:
+            messages.error(request, "The passwords don't match.")
+            return redirect('register')
+        
+        if User.objects.filter(email=email).exists():
+            messages.error(request, "User with this email already exists.")
+            return redirect('register')
+        
+        new_user = User.objects.create_user(email=email, password=password1, first_name=first_name, last_name=last_name, middle_name=middle_name, account_type=account_type)
+        return redirect('login')
+    
+    else:
+        return render(request, "accounts/register.html")
 
 
 @already_logged_in
