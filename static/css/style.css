@@ -64,9 +64,14 @@
 
 .message__container{
     display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 5px 10px 0px;
+    justify-content: space-between;
+}
+
+.message__container:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,0.2);
 }
 
 .message__container:last-of-type{
@@ -76,6 +81,10 @@
 .message__container img{
     width: 75px;
     border-radius: 50%;
+}
+
+.message__item{
+    flex-basis: 85%;
 }
 
 .message__sender{

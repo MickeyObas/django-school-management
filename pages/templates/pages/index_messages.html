@@ -2,10 +2,10 @@
 
 {% load static %}
 
-{% block content %}
-
 {% block background_image %}{% static 'assets/images/mail.png' %}{% endblock background_image %}
 
+
+{% block content %}
 
     <!-- Messages Section -->
     <section class="pt-2 pt-md-5">
@@ -16,64 +16,21 @@
                         <div class="card-header bg-success-subtle">
                             <h3>Messages</h3>
                         </div>
-                        <div class="card-body bg-body-tertiary mailbox__container p-0">
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid me-2 me-md-0">
+                        <div class="card-body bg-body-tertiary mailbox__container p-0 pe-2">
+                            {% for message in user_messages %}
+                            <div class="message__container mb-2 mb-md-1" data-message-id="{{message.id}}">
+                                {% if message.sender.account_type == 'S' %}
+                                <img src="{{message.sender.student.profile_picture.url}}" alt="" class="img-fluid me-2 me-md-0">
+                                {% elif message.sender.account_type == 'L' %}
+                                <img src="{{message.sender.lecturer.profile_picture.url}}" alt="" class="img-fluid me-2 me-md-0">
+                                {% endif %}
                                 <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
+                                    <div class="message__sender">{{ message.sender.full_name }} <span class="message__timestamp">{{message.timestamp|time}}</span></div>
+                                    <div class="message__title">{{ message.title }}</div>
+                                    <p class="message__slice">{{ message.body|truncatechars:85 }}</p>
                                 </div>
                             </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-                            <div class="message__container mb-2 mb-md-1">
-                                <img src="images/profile-img.png" alt="" class="img-fluid me-2 me-md-0">
-                                <div class="message__item">
-                                    <div class="message__sender">Message Sender <span class="message__timestamp">7:10 am</span></div>
-                                    <div class="message__title">Message Title</div>
-                                    <p class="message__slice">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae doloribus vero quis ullam id illum.</p>
-                                </div>
-                            </div>
-
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -84,7 +41,7 @@
                         </div>
                         <div class="card-body p-0">
                             <div class="mailbox__field">
-                                <span>Inbox</span>
+                                <span>Inbox <span class="text-muted small ms-2">{{total}}</span></span>
                             </div>
                             <div class="mailbox__field">
                                 <span>Starred</span>
@@ -106,3 +63,17 @@
     </section>
     
     {% endblock content  %}
+
+    {% block extrajs %}
+
+    <script>
+        const messageContainers = document.querySelectorAll('.message__container');
+        for(let messageContainer of messageContainers){
+            messageContainer.addEventListener('click', (e) => {
+                let messageId = messageContainer.dataset.messageId;
+                window.location.href = `message/${messageId}`
+            })
+        }
+    </script>
+
+    {% endblock %}

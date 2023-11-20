@@ -11,6 +11,8 @@ from .decorators import already_logged_in
 @already_logged_in
 def register(request):
 
+    # FIXME New user can reigister without name values and password strength checks.
+
     if request.method == 'POST':
         account_type = request.POST.get('account_type')
         first_name = request.POST.get('first_name')
@@ -24,6 +26,8 @@ def register(request):
             messages.error(request, "The passwords don't match.")
             return redirect('register')
         
+        # TODO Check if email is properly validated.
+
         if User.objects.filter(email=email).exists():
             messages.error(request, "User with this email already exists.")
             return redirect('register')

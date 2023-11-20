@@ -13,8 +13,12 @@ from accounts.models import User
 def index_messages(request):
 
     user_messages = Message.objects.filter(recipient=request.user)
+    user_messages_total = user_messages.count()
 
-    context = {"messages": user_messages}
+    context = {
+        "user_messages": user_messages,
+        "total": user_messages_total
+        }
 
     return render(request, "pages/index_messages.html", context)
 
@@ -28,7 +32,7 @@ def view_message(request, pk):
         # TODO Log unauthorized access attempts later. For now, redirect them and pretend nothing happened lmao.
         return redirect("/messages/")
 
-    context = {"message": message}
+    context = {"user_message": message}
 
     return render(request, "messaging/view_message.html", context)
 

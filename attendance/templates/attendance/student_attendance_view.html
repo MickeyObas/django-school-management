@@ -21,70 +21,36 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {% for record in student_attendance_records %}
                             <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
+                                <td>{{record.date|date:"m-d-Y"}}</td>
+                                <td>{{record.course}}</td>
+                                <td>{{record.get_status_display}}</td>
                             </tr>
-                            <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
-                            </tr>
-                            <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
-                            </tr>
-                            <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
-                            </tr>
-                            <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
-                            </tr>
-                            <tr>
-                                <td>22/10/23</td>
-                                <td>CSC 101</td>
-                                <td>Absent</td>
-                            </tr>
+                            {% endfor %}
                         </table>
-                        <div class="pt-4 mt-md-5 d-flex justify-content-between">
-                            <div class="d-flex flex-column">
-                                <select name="" id="" class="form-select form-select-sm">
-                                    <option value="">Date</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                </select>
-                                <p class="form-text">Filter by Date</p>
+                        <form action="">
+                            <div class="pt-4 mt-md-5 d-flex justify-content-around">
+                                <div class="d-flex flex-column">
+                                    <select name="course" id="" class="form-select form-select-sm">
+                                        <option value="">Course</option>
+                                        {% for course in student_object.course_pack.courses.all %}
+                                        <option value="{{course.code}}">{{course.code}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <p class="form-text">Filter by Course</p>
+                                </div>
+                                <div class="d-flex flex-column">
+                                    <select name="status" id="" class="form-select form-select-sm">>
+                                        <option value="">Status</option>
+                                        <option value="P">Present</option>
+                                        <option value="A">Absent</option>
+                                    </select>
+                                    <p class="form-text">Filter by Status</p>
+                                </div>
                             </div>
-                            <div class="d-flex flex-column">
-                                <select name="" id="" class="form-select form-select-sm">
-                                    <option value="">Course</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                </select>
-                                <p class="form-text">Filter by Course</p>
-                            </div>
-                            <div class="d-flex flex-column">
-                                <select name="" id="" class="form-select form-select-sm">
-                                    <option value="">Status</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                    <option value="">CSC 101</option>
-                                </select>
-                                <p class="form-text">Filter by Status</p>
-                            </div>
-                        </div>
-                        <input type="submit" value="Search" class="btn btn-danger w-100 mt-4">
+                            <input type="submit" value="Search" class="btn btn-danger w-100 mt-4">
+                        </form>
                     </div>
                 </div>
                 </div>

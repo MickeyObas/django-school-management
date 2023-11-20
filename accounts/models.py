@@ -35,4 +35,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     @property
     def full_name(self):
+        if self.account_type == 'L':
+            return f"{self.lecturer.prefix}. {self.last_name} {self.middle_name[0]}. {self.first_name}"
         return f"{self.last_name.upper()} {self.first_name} {self.middle_name}"

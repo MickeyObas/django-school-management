@@ -15,8 +15,8 @@
                         <div class="card-header bg-body-secondary">
                             <h3 class="text-center fw-bold">My Results</h3>
                         </div>
-                        <div class="card-body results__box">
-                            <table class="table table-bordered text-center">
+                        <div class="card-body results__box d-flex flex-column justify-content-between">
+                            <table class="table table-bordered text-center overflow-y-scroll">
                                 <thead>
                                     <tr>
                                         <th>Course</th>
@@ -24,46 +24,13 @@
                                         <th>Grade</th>
                                     </tr>
                                 </thead>
+                                {% for record in grades %}
                                 <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
+                                    <td>{{record.course.code}}</td>
+                                    <td>{{record.overall}}</td>
+                                    <td>{{record.grade_letter}}</td>
                                 </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
-                                <tr>
-                                    <td>CSC 101</td>
-                                    <td>74</td>
-                                    <td>A</td>
-                                </tr>
+                                {% endfor %}
                             </table>
                             <a href="" class="btn btn-primary w-100 mt-3">Print Result</a>
                         </div>

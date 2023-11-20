@@ -52,6 +52,4 @@ class Command(BaseCommand):
             student_profile.matric_number = f"{student_profile.department.abbreviation}/{time.strftime('%Y')[-2:]}/{matric_index}"
             student_profile.save()
 
-        # TODO Assert that this handle triggers the create_student_profile signal
-
         self.stdout.write(self.style.SUCCESS("Sucessfully populated students."))
