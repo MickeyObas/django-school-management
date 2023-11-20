@@ -15,19 +15,31 @@ import json
 def index_messages(request, category=None):
 
     user_messages = Message.objects.filter(recipient=request.user)
+    sent_messages = Message.objects.filter(sender=request.user)
     starred_messages = user_messages.filter(is_favourite=True)
     important_messages = user_messages.filter(sender__account_type="L")
     user_messages_total = user_messages.count()
     starred_messages_total = starred_messages.count()
     important_messages_total = important_messages.count()
+    sent_messages_total = sent_messages.count()
 
     context = {
+    "total": user_messages_total,
+    "starred": starred_messages_total,
+    "important_total": important_messages_total,
+    "sent_total": sent_messages_total
+    }
 
-        "user_messages": user_messages,
-        "total": user_messages_total,
-        "starred": starred_messages_total,
-        "important_total": important_messages_total
-        }
+    if category == 'favourite':
+        user_messages = starred_messages
+    elif category == 'important':
+        user_messages = important_messages
+    elif category == 'sent':
+        user_messages = sent_messages
+    else:
+        user_messages = user_messages
+
+    context['user_messages'] = user_messages
 
     return render(request, "pages/index_messages.html", context)
 
@@ -78,6 +90,29 @@ def send_message(request, pk):
     return render(request, "messaging/send_message.html", context)
 
 
+def send_message(request):
+    # TODO: Gracefully handle messages to users that do not exist
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        recipient = data['recipient']
+        message_body = data['message']
+        title = data['title']
+
+        recipient = User.objects.get(email=recipient)
+
+        Message.objects.create(
+            sender=request.user,
+            recipient=recipient,
+            body=message_body
+            )
+    
+        sent_messages = Message.objects.filter(sender=request.user)
+        updated_count = sent_messages.count()
+
+        return JsonResponse({'updated-count': updated_count})
+
+
+@login_required(login_url="login")
 def add_to_favourites(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -95,6 +130,7 @@ def add_to_favourites(request):
         return JsonResponse({"updated-count": updated_count})
     
 
+@login_required(login_url="login")
 def remove_from_favourites(request):
     if request.method == 'POST':
         data = json.loads(request.body)
