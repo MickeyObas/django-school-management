@@ -42,8 +42,8 @@ def record_attendance(request, code):
 @login_required(login_url="login")
 def student_attendance_view(request):
 
-    course_query = request.GET.get('course', '') if request.GET.get('course') else ''
-    status_query = request.GET.get('status', '') if request.GET.get('status') else ''
+    course_query = request.GET.get('course', '')
+    status_query = request.GET.get('status', '')
     student_object = Student.objects.get(user=request.user)
 
     query = Q()

@@ -103,6 +103,37 @@
     font-size: 12px;
 }
 
+#sendMessageBox {
+    min-height: 255px;
+    max-height: 255px;
+}
+
+#sendMessageBox input{
+    border: none;
+    outline: none;
+    border-bottom: 1px solid black;
+}
+
+#sendMessageBox .card-body{
+    position: relative;
+}
+
+#sendMessageBox button{
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 10px;
+    margin: 0 10px;
+}
+
+
+#messageBody{
+    border: none;
+    outline: none;
+    padding: 10px 10px;
+    overflow-y: scroll;
+}
+
 .profile_picture{
     border-radius: 50%;
 }
