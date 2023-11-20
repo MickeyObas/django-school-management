@@ -103,34 +103,20 @@
     font-size: 12px;
 }
 
-#sendMessageBox {
-    min-height: 255px;
-    max-height: 255px;
+#sendMessageBox{
+    height: 252px;
 }
 
 #sendMessageBox input{
-    border: none;
+    border: 1px solid rgba(0,0,0,0.3);
     outline: none;
-    border-bottom: 1px solid black;
 }
 
-#sendMessageBox .card-body{
-    position: relative;
-}
-
-#sendMessageBox button{
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    bottom: 10px;
-    margin: 0 10px;
-}
-
-
-#messageBody{
-    border: none;
-    outline: none;
+.message__body{
     padding: 10px 10px;
+    height: 120px;
+    margin-top: 15px;
+    border: 1px solid rgba(0,0,0,0.3);
     overflow-y: scroll;
 }
 
