@@ -12,7 +12,7 @@ import json
 
 
 @login_required(login_url="login")
-def index_messages(request, category=None):
+def index_messages(request):
 
     user_messages = Message.objects.filter(recipient=request.user)
     sent_messages = Message.objects.filter(sender=request.user)
@@ -24,22 +24,12 @@ def index_messages(request, category=None):
     sent_messages_total = sent_messages.count()
 
     context = {
+    "user_messages": user_messages,
     "total": user_messages_total,
     "starred": starred_messages_total,
     "important_total": important_messages_total,
     "sent_total": sent_messages_total
     }
-
-    if category == 'favourite':
-        user_messages = starred_messages
-    elif category == 'important':
-        user_messages = important_messages
-    elif category == 'sent':
-        user_messages = sent_messages
-    else:
-        user_messages = user_messages
-
-    context['user_messages'] = user_messages
 
     return render(request, "pages/index_messages.html", context)
 
