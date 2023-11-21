@@ -136,6 +136,15 @@
 
         const recipient = document.getElementById('recipient');
         const title = document.getElementById('title');
+
+        // Check if there's saved data from a message-reply action.
+        if(localStorage.getItem('reply-title') && localStorage.getItem('reply-recipient')){
+            recipient.value = localStorage.getItem('reply-recipient');
+            localStorage.removeItem('reply-recipient');
+            title.value = localStorage.getItem('reply-title');
+            localStorage.removeItem('reply-title');
+        }
+
         const messageBody = document.querySelector('.message__body');
 
         sendMessageButton.addEventListener('click', (e) => {

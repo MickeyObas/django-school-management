@@ -1,10 +1,160 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
 
-<h1>Message Title: {{user_message.title}}</h1>
-<h2>Sender: {{user_message.sender}}</h2>
-<hr>
-<p>{{user_message.body}}</p>
+<div class="p-3 mt-2 container">
+    <h3 class="display-5 mb-5">{{user_message.title}}</h3>
+    <div class="d-flex">
+        {% if user_message.sender.account_type == 'S' %}
+        <img src="{{user_message.sender.student.profile_picture.url}}" alt="" class="mt-2" style="border-radius: 50%; width:100px">
+        {% elif user_message.sender.account_type == 'L' %}
+        <img src="{{user_message.sender.lecturer.profile_picture.url}}" alt="" class="mt-2" style="border-radius: 50%; width:100px">
+        {% else %}
+        <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="mt-2" style="border-radius: 50%;">
+        {% endif %}
+        <div class="ms-4 d-flex justify-content-between w-100">
+            <div class="">
+                <h5 class="d-inline-block">{{user_message.sender.full_name}}</h5> <span class="text-muted small">{{user_message.timestamp|date:'g:i a'}}</span>
+            </div>
+            <div class="d-flex">
+                <i id="replyButton" class="fa-solid fa-reply me-3"></i>
+                {% if user_message.is_favourite %}
+                <i id="favouriteButton" class="fa-solid fa-star me-3" style="color: darkorange"></i>
+                {% else %}
+                <i id="favouriteButton" class="fa-regular fa-star me-3" style="color: darkorange"></i>
+                {% endif %}
+                <i id ="mailButton" class="fa-solid fa-envelope me-3"></i>
+                <i id="deleteButton" class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <p class="blockquote">{{user_message.body}}</p>
+    </div>
+</div>
 
 {% endblock content %}
+
+
+{% block extrajs %}
+
+<script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    const replyButton = document.getElementById('replyButton');
+    const favouriteButton = document.getElementById('favouriteButton');
+    const deleteButton = document.getElementById('deleteButton');
+    const mailButton = document.getElementById('mailButton');
+    const messageId = "{{user_message.id}}";
+
+    replyButton.addEventListener('click', (e) => {
+        // Take the user to the message page with values in the message box.
+        const replyTitle = "Re: {{user_message.title}}"
+        const replyRecipient = "{{user_message.sender.email}}"
+
+        localStorage.setItem('reply-title', replyTitle);
+        localStorage.setItem('reply-recipient', replyRecipient);
+
+        window.location.href = "/messages/"
+    })
+
+    favouriteButton.addEventListener('click', (e) => {
+        if(e.target.classList.contains('fa-regular')){
+            e.target.classList.remove('fa-regular');
+            e.target.classList.add('fa-solid');
+            addToFavourites(messageId);
+        }else{
+            e.target.classList.remove('fa-solid');
+            e.target.classList.add('fa-regular');
+            removeFromFavourites(messageId);
+        }
+    })
+
+    mailButton.addEventListener('click', (e) => {
+        window.location.href = "/messages/"
+    })
+
+    deleteButton.addEventListener('click', (e) => {
+        const url = "{% url 'delete_message' %}"
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                'messageId': messageId
+            })
+        }).then((response => {
+            return response.json()
+        })).then(data => {
+            console.log(data);
+            window.location.href = '/messages/'
+        }).catch((e) => {
+            console.log("Whoops. An error occured, ", e);
+        })
+    })
+
+    function addToFavourites(messageId){
+
+        url = "{% url 'add_to_favourites' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                "messageId": messageId
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+        }).catch((e) => {
+            console.log("An error occured, ", e)
+        })
+    }
+
+
+    function removeFromFavourites(messageId){
+        url = "{% url 'remove_from_favourites' %}"
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                "messageId": messageId
+            })
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+        }).catch((e) => {
+            console.log("An error occured, ", e)
+        })
+    }
+
+</script>
+
+{% endblock extrajs %}

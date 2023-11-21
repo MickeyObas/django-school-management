@@ -104,6 +104,15 @@ def send_message(request):
         updated_count = sent_messages.count()
 
         return JsonResponse({'updated-count': updated_count})
+    
+
+def delete_message(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        message_id = data['messageId']
+        message_to_delete = Message.objects.get(recipient=request.user, id = message_id)
+        message_to_delete.delete()
+        return JsonResponse("Message deleted", safe=False)
 
 
 @login_required(login_url="login")
