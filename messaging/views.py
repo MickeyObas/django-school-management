@@ -1,4 +1,5 @@
 from django.urls import reverse
+from django.utils import timezone
 from django.contrib import messages
 from django.http import HttpResponseForbidden, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
@@ -22,13 +23,15 @@ def index_messages(request):
     starred_messages_total = starred_messages.count()
     important_messages_total = important_messages.count()
     sent_messages_total = sent_messages.count()
+    twenty_four_hours_ago = timezone.now() - timezone.timedelta(hours=24)
 
     context = {
     "user_messages": user_messages,
     "total": user_messages_total,
     "starred": starred_messages_total,
     "important_total": important_messages_total,
-    "sent_total": sent_messages_total
+    "sent_total": sent_messages_total,
+    "twenty_four_hours_ago": twenty_four_hours_ago
     }
 
     return render(request, "pages/index_messages.html", context)
@@ -93,7 +96,8 @@ def send_message(request):
         Message.objects.create(
             sender=request.user,
             recipient=recipient,
-            body=message_body
+            body=message_body,
+            title=title
             )
     
         sent_messages = Message.objects.filter(sender=request.user)

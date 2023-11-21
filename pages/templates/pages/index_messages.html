@@ -25,7 +25,13 @@
                                 <img src="{{message.sender.lecturer.profile_picture.url}}" alt="" class="img-fluid me-2 me-md-0">
                                 {% endif %}
                                 <div class="message__item">
-                                    <div class="message__sender">{{ message.sender.full_name }} <span class="message__timestamp">{{message.timestamp|time}}</span></div>
+                                    <div class="message__sender">{{ message.sender.full_name }} <span class="message__timestamp">
+                                        {% if message.timestamp > twenty_four_hours_ago %}
+                                        {{message.timestamp|date:'g:i a'}}
+                                        {% else %}
+                                        {{message.timestamp|date:'j M'}}
+                                        {% endif %}
+                                    </span></div>
                                     <div class="message__title">{{ message.title }}</div>
                                     <div class="d-flex justify-content-between">
                                         <p class="message__slice">{{ message.body|truncatechars:85 }}</p>
@@ -75,7 +81,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -163,7 +168,6 @@
             }).catch(e => {
                 console.log("Whoops. Something went wrong, ", e);
             })
-
         })
 
         function addToFavourites(messageId){
