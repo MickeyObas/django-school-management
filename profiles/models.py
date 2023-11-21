@@ -5,8 +5,8 @@ from accounts.models import User
 from department.models import Department
 
 import random
-from datetime import date
 from PIL import Image
+import datetime
 
 
 class BaseProfile(models.Model):
@@ -85,6 +85,10 @@ class Lecturer(BaseProfile):
     date_of_hire = models.DateTimeField(default=timezone.now)
     teaching_experience = models.IntegerField(default=4)
     courses_taught = models.ManyToManyField("curriculum.Course", blank=True)
+
+    @property
+    def years_spent(self):
+        pass
 
     def __str__(self):
         if not self.prefix:

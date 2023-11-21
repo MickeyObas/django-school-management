@@ -34,7 +34,7 @@ def record_attendance(request, code):
                 status = value
                 print(status)
                 student = Student.objects.get(id=student_id)
-                StudentAttendance.objects.create(student=student, status=value)
+                StudentAttendance.objects.create(student=student, status=value, course=course)
 
     return render(request, "attendance/record_attendance.html", context)
 

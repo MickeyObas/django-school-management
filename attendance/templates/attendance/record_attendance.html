@@ -1,44 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Attendance List for {{course.title}}</h1>
-<h2>Date: {% now 'l, jS F Y'%}</h2>
 
-<form action="" method="post">
+<div class="container pt-2 pb-4">
+    <h3 class="display-4 text-center mt-3">Attendance List for {{course.code}}</h3>
+    <h4 class="lead text-center">Date: {% now 'l, jS F Y'%}</h4>
+
+    <form action="" method="post" class="mt-5">
     {% csrf_token %}
-    <table>
-    <thead>
-        <tr>
-            <th>Matric No</th>
-            <th>Name</th>
-            <th>Present</th>
-            <th>Absent</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for student in course.get_students %}
-        <tr>
-            <td>{{student.matric_number}}</td>
-            <td>{{student.full_name}}</td>
-            <td>
-                <input type="radio" name="attendance_{{student.id}}" value="P">
-            </td>
-            <td>
-                <input style="color:red"  type="radio" name="attendance_{{student.id}}" value="A">
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-    </table>
-    <input id="saveBtn" type="submit" class="btn btn-primary" value="Save Attendance Sheet">
+    <div class="row w-100 d-flex justify-content-center">
+        <div class="col-md-7">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr class="table-light">
+                        <th>Matric No</th>
+                        <th>Name</th>
+                        <th>Present</th>
+                        <th>Absent</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in course.get_students %}
+                    <tr>
+                        <td>{{student.matric_number}}</td>
+                        <td>{{student.full_name}}</td>
+                        <td>
+                            <input type="radio" name="attendance_{{student.id}}" value="P">
+                        </td>
+                        <td>
+                            <input style="color:red"  type="radio" name="attendance_{{student.id}}" value="A">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+                <input id="saveBtn" type="submit" class="btn btn-primary w-100" value="Save Attendance Sheet">
+        </div>
+    </div>
+
 </form>
+</div>
 
 <script>
     const saveBtn = document.getElementById('saveBtn');
     saveBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("Attendance uploaded.")
-        window.location.href = "{% url 'index_attendance' %}"
+        alert("Attendance uploaded.");
+        window.location.href = "{% url 'index_attendance' %}";
     })
 </script>
 

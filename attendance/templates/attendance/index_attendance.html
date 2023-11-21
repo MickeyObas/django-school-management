@@ -2,13 +2,17 @@
 
 {% block content %}
 
-<h2>Attendance Tracking </h2>
-<p>Choose a course</p>
+<div class="container pt-3">
+    <h3 class="display-4">Attendance Record</h3>
+    <p class="mb-4">Choose the course to record attendance for below.</p>
 
-{% for course in request.user.lecturer.courses_taught.all %}
-<p>
-    <a href="{% url 'record_attendance' course.code %}" class="btn btn-secondary">{{course.title}}</a>
-</p>
-{% endfor %}
+    {% for course in request.user.lecturer.courses_taught.all %}
+    <p>
+        <a href="{% url 'record_attendance' course.code %}" class="text-decoration-none">{{course.title}}</a>
+    </p>
+    {% endfor %}
+</div>
+
+
 
 {% endblock content %}

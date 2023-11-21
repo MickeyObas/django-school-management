@@ -1,15 +1,38 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h2>Welcome {{request.user.lecturer.prefix}}. {{request.user.last_name}}</h2>
+{% load static %}
 
-<div id="lecturer-index">
-    <img src="{{request.user.lecturer.profile_picture.url}}" alt="">
-    <p>Your Profile information: </p>
-    <p>Email Address: {{request.user.email}}</p>
-    <p>Department: {{request.user.lecturer.department}}</p>
-    
-</div>
+{% block content %}
+
+    <!-- Main Content -->
+
+    <section>
+        <div class="container pt-3">
+            <div class="row py-3 vh-50">
+                <div class="col-md-3 border-1">
+                    {% if request.user.lecturer.profile_picture %}
+                    <img src="{{request.user.lecturer.profile_picture.url}}" alt="" class="img-fluid profile_picture">
+                    {% else %}
+                    <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid profile_picture">
+                    {% endif %}
+                </div>
+                <div class="col-md">
+                    <h3>Profile Information</h3>
+                    <div class="row mb-2">
+                        <div class="col-4 col-md-3">{{request.user.lecturer.lecturer_id}}</div>
+                        <div class="col-4 col-md-3">{{request.user.lecturer.department}}</div>
+                        <div class="col-4 col-md-3">{{request.user.lecturer.years_spent}}</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4 col-md-3">{{request.user.lecturer.birthdate}}</div>
+                        <div class="col-4 col-md-3">{{request.user.lecturer.state_of_origin}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
 {% endblock content %}
 
