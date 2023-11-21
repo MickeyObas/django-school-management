@@ -6,7 +6,7 @@
     <h3 class="display-4 text-center mt-3">Attendance List for {{course.code}}</h3>
     <h4 class="lead text-center">Date: {% now 'l, jS F Y'%}</h4>
 
-    <form action="" method="post" class="mt-5">
+    <form action="" method="post" id="attendanceForm" class="mt-5">
     {% csrf_token %}
     <div class="row w-100 d-flex justify-content-center">
         <div class="col-md-7">
@@ -34,18 +34,77 @@
                     {% endfor %}
                 </tbody>
                 </table>
-                <input id="saveBtn" type="submit" class="btn btn-primary w-100" value="Save Attendance Sheet">
+                <button id="saveBtn" type="button" class="btn btn-primary w-100">Save</button>
         </div>
     </div>
-
 </form>
 </div>
 
 <script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
     const saveBtn = document.getElementById('saveBtn');
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+    const totalRadioButtons = radioButtons.length;
+    const attendanceForm = document.getElementById('attendanceForm');
+
     saveBtn.addEventListener('click', (e) => {
-        alert("Attendance uploaded.");
-        window.location.href = "{% url 'index_attendance' %}";
+        const recordArray = [];
+        let totalClicked = 0;
+        for(let radioButton of radioButtons){
+            if(radioButton.checked){
+                totalClicked += 1;
+                let studentData = {};
+                studentData[radioButton.name] = radioButton.value;
+                recordArray.push(studentData);
+            } 
+        }
+
+        console.log(recordArray);
+
+        // Check if every student's attendance status has been recorded
+        if(totalClicked === totalRadioButtons / 2){
+            url = window.location.href;
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(recordArray)
+            }).then((response) => {
+                return response.json();
+            }).then(() => {
+                alert("Attendance recorded successfully.");
+                window.location.href = "/attendance/"; 
+            }).catch((e) => {
+                console.log("Whoops, something went wrong, ", e)
+            })
+
+        }else{
+            e.preventDefault();
+            alert(`You haven't recorded for ${(totalRadioButtons/2) - totalClicked} students. Please review your records.`);
+            console.log(totalClicked);
+            console.log(totalRadioButtons / 2);
+        }
+        
     })
 </script>
 

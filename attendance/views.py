@@ -1,5 +1,8 @@
-from django.shortcuts import render
 from django.db.models import Q
+from django.utils import timezone
+from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import user_passes_test, login_required
 
@@ -8,6 +11,8 @@ from profiles.models import Student
 from curriculum.models import Course
 from accounts.permission_handlers.basic import is_lecturer
 
+import json
+from datetime import date 
 from dateutil import parser
 
 
@@ -26,15 +31,35 @@ def record_attendance(request, code):
 
     if course not in request.user.lecturer.courses_taught.all():
         return HttpResponseForbidden("You are not allowed here. Be gone!")
+    
+    todays_date = date.today()
+    
+    if StudentAttendance.objects.filter(course=course, date=todays_date).first():
+        messages.error(request, "Attendance for this course has already been recorded today.")
+        return render(request, "attendance/index_attendance.html", context)
+        
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        for student_record in data:
+            for key, value in student_record.items():
+                if key.startswith('attendance'):
+                    student_id = key.split('_')[-1]
+                    status = value
+                    student = Student.objects.get(id=student_id)
+                    StudentAttendance.objects.create(student=student, course=course, status=status)
 
-    if request.method == "POST":
-        for key, value in request.POST.items():
-            if key.startswith("attendance_"):
-                student_id = key.split("_")[-1]
-                status = value
-                print(status)
-                student = Student.objects.get(id=student_id)
-                StudentAttendance.objects.create(student=student, status=value, course=course)
+        return JsonResponse("So far so good", safe=False)
+
+
+    # if request.method == "POST":
+    #     for key, value in request.POST.items():
+    #         if key.startswith("attendance_"):
+    #             student_id = key.split("_")[-1]
+    #             status = value
+    #             print(status)
+    #             student = Student.objects.get(id=student_id)
+    #             StudentAttendance.objects.create(student=student, status=value, course=course)
 
     return render(request, "attendance/record_attendance.html", context)
 
