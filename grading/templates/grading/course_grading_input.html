@@ -2,8 +2,10 @@
 
 {% block content %}
 
-<h1>Scoresheet for {{course.code}}</h1>
-<table id="studentList" style="width: 50%;">
+<div class="container">
+
+    <h1>Scoresheet for {{course.code}}</h1>
+<table id="studentList" class="table table-bordered" style="width: 50%;">
     <tr>
         <th style="width: 15%;">Matric Number</th>
         <th style="width: 25%;">Name</th>
@@ -47,6 +49,8 @@
         </tr>
     {% endfor %}
 </table>
+    
+</div>
 
 <script>
 

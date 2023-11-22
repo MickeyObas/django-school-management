@@ -38,7 +38,7 @@
                             <li><a href="{% url 'student_grades_view' %}" class="dropdown-item">Grades</a></li>
                             {% elif request.user.account_type == 'L' %}
                             <li><a href="{% url 'index_attendance' %}" class="dropdown-item">Record Attendance</a></li>
-                            <li><a href="" class="dropdown-item">Record Grades</a></li>                         
+                            <li><a href="{% url 'index_grading' %}" class="dropdown-item">Record Grades</a></li>                         
                             {% endif %}
                         </ul>
                     </li>

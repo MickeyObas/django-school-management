@@ -36,7 +36,7 @@ def record_attendance(request, code):
     
     if StudentAttendance.objects.filter(course=course, date=todays_date).first():
         messages.error(request, "Attendance for this course has already been recorded today.")
-        return render(request, "attendance/index_attendance.html", context)
+        return redirect('index_attendance')
         
     
     if request.method == 'POST':
