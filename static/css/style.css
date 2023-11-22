@@ -1,3 +1,15 @@
+.vh-75{
+    height: 75vh;
+}
+
+.vh-60{
+    height: 60vh;
+}
+
+.vh-55{
+    height: 55vh;
+}
+
 .img-container{
     position: relative;
 }
