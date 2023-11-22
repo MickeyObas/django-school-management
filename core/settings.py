@@ -31,18 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-
     # Default Apps
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # Internal Apps
-
     "curriculum.apps.CurriculumConfig",
     "profiles.apps.ProfilesConfig",
     "department.apps.DepartmentConfig",
@@ -52,7 +48,6 @@ INSTALLED_APPS = [
     "grading.apps.GradingConfig",
     "records.apps.RecordsConfig",
     "attendance.apps.AttendanceConfig",
-
     # Third-party Apps
     "rest_framework",
 ]

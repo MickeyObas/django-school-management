@@ -13,28 +13,35 @@ def register(request):
 
     # FIXME New user can reigister without name values and password strength checks.
 
-    if request.method == 'POST':
-        account_type = request.POST.get('account_type')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        middle_name = request.POST.get('middle_name')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
+    if request.method == "POST":
+        account_type = request.POST.get("account_type")
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        middle_name = request.POST.get("middle_name")
+        email = request.POST.get("email")
+        password1 = request.POST.get("password1")
+        password2 = request.POST.get("password2")
 
         if password1 != password2:
             messages.error(request, "The passwords don't match.")
-            return redirect('register')
-        
+            return redirect("register")
+
         # TODO Check if email is properly validated.
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "User with this email already exists.")
-            return redirect('register')
-        
-        new_user = User.objects.create_user(email=email, password=password1, first_name=first_name, last_name=last_name, middle_name=middle_name, account_type=account_type)
-        return redirect('login')
-    
+            return redirect("register")
+
+        new_user = User.objects.create_user(
+            email=email,
+            password=password1,
+            first_name=first_name,
+            last_name=last_name,
+            middle_name=middle_name,
+            account_type=account_type,
+        )
+        return redirect("login")
+
     else:
         return render(request, "accounts/register.html")
 

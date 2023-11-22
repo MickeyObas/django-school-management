@@ -26,12 +26,12 @@ def index_messages(request):
     twenty_four_hours_ago = timezone.now() - timezone.timedelta(hours=24)
 
     context = {
-    "user_messages": user_messages,
-    "total": user_messages_total,
-    "starred": starred_messages_total,
-    "important_total": important_messages_total,
-    "sent_total": sent_messages_total,
-    "twenty_four_hours_ago": twenty_four_hours_ago
+        "user_messages": user_messages,
+        "total": user_messages_total,
+        "starred": starred_messages_total,
+        "important_total": important_messages_total,
+        "sent_total": sent_messages_total,
+        "twenty_four_hours_ago": twenty_four_hours_ago,
     }
 
     return render(request, "pages/index_messages.html", context)
@@ -85,71 +85,72 @@ def send_message(request, pk):
 
 def send_message(request):
     # TODO: Gracefully handle messages to users that do not exist
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        recipient = data['recipient']
-        message_body = data['message']
-        title = data['title']
+        recipient = data["recipient"]
+        message_body = data["message"]
+        title = data["title"]
 
         recipient = User.objects.get(email=recipient)
 
         Message.objects.create(
-            sender=request.user,
-            recipient=recipient,
-            body=message_body,
-            title=title
-            )
-    
+            sender=request.user, recipient=recipient, body=message_body, title=title
+        )
+
         sent_messages = Message.objects.filter(sender=request.user)
         updated_count = sent_messages.count()
 
-        return JsonResponse({'updated-count': updated_count})
-    
+        return JsonResponse({"updated-count": updated_count})
+
 
 def delete_message(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        message_id = data['messageId']
-        message_to_delete = Message.objects.get(recipient=request.user, id = message_id)
+        message_id = data["messageId"]
+        message_to_delete = Message.objects.get(recipient=request.user, id=message_id)
         message_to_delete.delete()
         return JsonResponse("Message deleted", safe=False)
 
 
 @login_required(login_url="login")
 def add_to_favourites(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        message_id = data['messageId']
-        
+        message_id = data["messageId"]
+
         message_object = Message.objects.get(id=message_id)
 
         message_object.is_favourite = True
         message_object.save()
 
-        user_favourite_messages = Message.objects.filter(recipient=request.user, is_favourite=True)
+        user_favourite_messages = Message.objects.filter(
+            recipient=request.user, is_favourite=True
+        )
 
         updated_count = user_favourite_messages.count()
 
         return JsonResponse({"updated-count": updated_count})
-    
+
 
 @login_required(login_url="login")
 def remove_from_favourites(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         data = json.loads(request.body)
-        message_id = data['messageId']
-        
+        message_id = data["messageId"]
+
         message_object = Message.objects.get(id=message_id)
 
         message_object.is_favourite = False
         message_object.save()
 
-        user_favourite_messages = Message.objects.filter(recipient=request.user, is_favourite=True)
+        user_favourite_messages = Message.objects.filter(
+            recipient=request.user, is_favourite=True
+        )
 
         updated_count = user_favourite_messages.count()
 
         return JsonResponse({"updated-count": updated_count})
-    
+
 
 def send_message_to_multiple_users(request):
 

@@ -37,10 +37,10 @@ class Course(models.Model):
                 pass
 
         return students
-    
+
 
 class CourseScheme(models.Model):
-    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    course = models.ForeignKey("Course", on_delete=models.CASCADE)
     week_1 = models.CharField(max_length=120, null=True, blank=True)
     week_2 = models.CharField(max_length=120, null=True, blank=True)
     week_3 = models.CharField(max_length=120, null=True, blank=True)
@@ -51,7 +51,7 @@ class CourseScheme(models.Model):
     week_8 = models.CharField(max_length=120, null=True, blank=True)
     week_9 = models.CharField(max_length=120, null=True, blank=True)
     week_10 = models.CharField(max_length=120, null=True, blank=True)
-    week_11= models.CharField(max_length=120, null=True, blank=True)
+    week_11 = models.CharField(max_length=120, null=True, blank=True)
     week_12 = models.CharField(max_length=120, null=True, blank=True)
 
     def __str__(self):

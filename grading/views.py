@@ -1,5 +1,10 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseForbidden, Http404, HttpResponseBadRequest
+from django.http import (
+    JsonResponse,
+    HttpResponseForbidden,
+    Http404,
+    HttpResponseBadRequest,
+)
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 import json
@@ -76,7 +81,7 @@ def save_student_course_grade(request):
 
     if course not in request.user.lecturer.courses_taught.all():
         return HttpResponseForbidden("Begone! You cannot perform this action!")
-    
+
     student = Student.objects.get(matric_number=matric_number)
 
     student_course_grade = CourseGrade.objects.get(student=student, course=course)
@@ -87,9 +92,7 @@ def save_student_course_grade(request):
 
     total_score = ca_score + exam_score
 
-    return JsonResponse(
-        {'status': 'success', 'total_score': total_score}
-    )
+    return JsonResponse({"status": "success", "total_score": total_score})
 
 
 @user_passes_test(is_student, login_url="dashboard", redirect_field_name=None)

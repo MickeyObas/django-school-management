@@ -17,7 +17,10 @@ class Message(models.Model):
     is_favourite = models.BooleanField(default=False)
 
     class Meta:
-        ordering = ["-is_favourite", "-timestamp",]
+        ordering = [
+            "-is_favourite",
+            "-timestamp",
+        ]
 
     def __str__(self):
         return f"Message by {self.sender.email} to {self.recipient.email}"

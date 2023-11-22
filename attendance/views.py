@@ -12,7 +12,7 @@ from curriculum.models import Course
 from accounts.permission_handlers.basic import is_lecturer
 
 import json
-from datetime import date 
+from datetime import date
 from dateutil import parser
 
 
@@ -31,26 +31,28 @@ def record_attendance(request, code):
 
     if course not in request.user.lecturer.courses_taught.all():
         return HttpResponseForbidden("You are not allowed here. Be gone!")
-    
+
     todays_date = date.today()
-    
+
     if StudentAttendance.objects.filter(course=course, date=todays_date).first():
-        messages.error(request, "Attendance for this course has already been recorded today.")
-        return redirect('index_attendance')
-        
-    
-    if request.method == 'POST':
+        messages.error(
+            request, "Attendance for this course has already been recorded today."
+        )
+        return redirect("index_attendance")
+
+    if request.method == "POST":
         data = json.loads(request.body)
         for student_record in data:
             for key, value in student_record.items():
-                if key.startswith('attendance'):
-                    student_id = key.split('_')[-1]
+                if key.startswith("attendance"):
+                    student_id = key.split("_")[-1]
                     status = value
                     student = Student.objects.get(id=student_id)
-                    StudentAttendance.objects.create(student=student, course=course, status=status)
+                    StudentAttendance.objects.create(
+                        student=student, course=course, status=status
+                    )
 
         return JsonResponse("So far so good", safe=False)
-
 
     # if request.method == "POST":
     #     for key, value in request.POST.items():
@@ -67,23 +69,25 @@ def record_attendance(request, code):
 @login_required(login_url="login")
 def student_attendance_view(request):
 
-    course_query = request.GET.get('course', '')
-    status_query = request.GET.get('status', '')
+    course_query = request.GET.get("course", "")
+    status_query = request.GET.get("status", "")
     student_object = Student.objects.get(user=request.user)
 
     query = Q()
 
     if course_query:
-        query &=  Q(course__code__exact=course_query)
+        query &= Q(course__code__exact=course_query)
 
     if status_query:
         query &= Q(status__iexact=status_query)
 
-    student_attendance_records = StudentAttendance.objects.filter(student=student_object).filter(query)
+    student_attendance_records = StudentAttendance.objects.filter(
+        student=student_object
+    ).filter(query)
 
     context = {
         "student_attendance_records": student_attendance_records,
-        "student_object": student_object
-        }
+        "student_object": student_object,
+    }
 
     return render(request, "attendance/student_attendance_view.html", context)

@@ -32,9 +32,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
+
     @property
     def full_name(self):
-        if self.account_type == 'L':
+        if self.account_type == "L":
             return f"{self.lecturer.prefix}. {self.last_name} {self.middle_name[0]}. {self.first_name}"
         return f"{self.last_name.upper()} {self.first_name} {self.middle_name}"
