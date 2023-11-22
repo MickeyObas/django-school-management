@@ -6,7 +6,7 @@
     <h3 class="display-4">Grading Records</h3>
     <p class="mb-4">Choose the course to record grades for below.</p>
     {% for course in request.user.lecturer.courses_taught.all %}
-    <p><a href="{% url 'course_grading_input' course.code %}">{{course.code}}</a></p>
+    <p><a class="text-decoration-none" href="{% url 'course_grading_input' course.code %}">{{course.code}}</a></p>
     {% endfor %}
 </div>
 

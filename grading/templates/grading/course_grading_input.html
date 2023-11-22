@@ -2,54 +2,63 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container pt-2 pb-4">
+    <h3 class="display-4 text-center mt-3">Grading Sheet for {{course.code}}</h3>
+    <h4 class="lead text-center">Note: Grades remain unconfirmed until approval from the board.</h4>
 
-    <h1>Scoresheet for {{course.code}}</h1>
-<table id="studentList" class="table table-bordered" style="width: 50%;">
-    <tr>
-        <th style="width: 15%;">Matric Number</th>
-        <th style="width: 25%;">Name</th>
-        <th style="width: 5%;">CA</th>
-        <th style="width: 5%;">Exam</th>
-        <th style="width: 5%;">Total</th>
-        <th style="width: 25%;">Department</th>
-        <th style="width: 15%;">Level</th>
-        <th style="width: 5%;">Action</th>
-    </tr>
-    {% for student in course.get_students %}
-    <tr data-student-id="{{student.matric_number}}">
-        <td>{{student.matric_number}}</td>
-        <td><a style="text-decoration: none;" href="{% url 'student-profile-view' student.id %}">{{student.full_name}}</a></td>
-        {% for student_course_grade in student.coursegrade_set.all %}
-        {% if student_course_grade.course.title == course.title %}
-        {% if student_course_grade.is_default %}
-        <td><input type="number" name="" class="caScore"></td>
-        <td><input type="number" name="" class="examScore"></td>
-        <td class="overallScore"></td>
-        {% else %}
-        <td>{{student_course_grade.c_a_total}}</td>
-        <td>{{student_course_grade.exam_total}}</td>
-        <td>{{student_course_grade.overall}}</td>
-        {% endif %}
-        <td>{{student.department}}</td>
-        <td>{{student.level}}</td>
-        <td><button class="btn btn-success saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">
-        {% if not student_course_grade.is_default %}    
-        Pending
-        {% else %}
-        Save
-        {% endif %}
-        </button></td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-    {% empty %}
-        <tr>
-            <td colspan="4">No Students Enrolled Yet</td>
-        </tr>
-    {% endfor %}
-</table>
-    
+    <div class="row w-100 d-flex justify-content-center">
+    <div class="col-md-7">
+        <table id="" class="table table-bordered table-responsive text-center mt-5">
+            <thead>
+                <tr>
+                    <th>Matric Number</th>
+                    <th>Name</th>
+                    <th>CA</th>
+                    <th>Exam</th>
+                    <th>Total</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in course.get_students %}
+                <tr data-student-id="{{student.matric_number}}">
+                    <td>{{student.matric_number}}</td>
+                    <td class="text-primary">{{student.full_name}}</td>
+                    {% for student_course_grade in student.coursegrade_set.all %}
+                    {% if student_course_grade.course.title == course.title %}
+                    {% if student_course_grade.is_default %}
+                    <td contenteditable="True" class="caScore" style="min-width:20px;max-width: 20px; min-width: 20px; max-width: 20px"></td>
+                    <td contenteditable="True" class="examScore" style="min-width:20px;max-width: 20px; min-width: 20px; max-width: 20px"></td>
+                    <td class="overallScore"></td>
+                    {% else %}
+                    <td>{{student_course_grade.c_a_total}}</td>
+                    <td>{{student_course_grade.exam_total}}</td>
+                    <td>{{student_course_grade.overall}}</td>
+                    {% endif %}
+                    <td>{{student.department}}</td>
+                    <td>{{student.level}}</td>
+                    {% if not student_course_grade.is_default %}
+                    <td><button class="btn btn-success disabled saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">Pending
+                    </button></td>
+                    {% else %}
+                    <td><button class="btn btn-primary saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">Save
+                    </button></td>  
+                    {% endif %}                  
+                </tr>
+                {% endif %}
+                {% endfor %}
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No Students Enrolled Yet</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 </div>
 
 <script>
@@ -82,10 +91,22 @@
             e.preventDefault();
             const row = e.target.closest('tr');
             const matricNumber = row.dataset.studentId === button.dataset.matricnumber ? row.dataset.studentId : null
-            const courseCode = button.dataset.coursecode
-            const caScore = row.querySelector('.caScore').value;
-            const examScore = row.querySelector('.examScore').value;
-            console.log(`Matric number: ${matricNumber}: Score saved!`)
+            const courseCode = button.dataset.coursecode;
+            const caScore = row.querySelector('.caScore').textContent;
+            const examScore = row.querySelector('.examScore').textContent;
+            const overallDisplay = row.querySelector('.overallScore');
+
+            // Disallow blank entries
+            if(!caScore || !examScore){
+                alert("Please input the CA and Exam scores. Fields can NOT be blank.");
+                return false;
+            }
+
+            // Validate grade values
+            if(parseInt(caScore) > 40 || parseInt(examScore) > 60){
+                alert("Invalid input. CA Score must be between 0-40 and Exam score must be between 0-60.");
+                return false;
+            };
 
             fetch(url, {
                 method: 'POST',
@@ -101,15 +122,19 @@
                     'exam_score': examScore
                 })
             }).then((response) => {
-                response.json()
+                return response.json();
             }).then(data => {
-                console.log(data)
-                console.log(`${matricNumber} save successful.`)
+                // Dynamically change the value and display of the button
+                e.target.classList.remove('btn-primary');
+                e.target.classList.add('btn-success', 'disabled');
+                e.target.textContent = "Pending";
+                overallDisplay.textContent = data['total_score'];
+                console.log(`${matricNumber} save successful.`);
             }).catch((e) => {
-                console.log("An error occured with the upload.")
+                console.log("An error occured with the upload.", e)
             })
 
-            window.location.reload();
+            
 
         })
     }

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseForbidden, Http404
+from django.http import JsonResponse, HttpResponseForbidden, Http404, HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 import json
@@ -66,11 +66,18 @@ def save_student_course_grade(request):
     ca_score = data["ca_score"]
     exam_score = data["exam_score"]
 
-    student = Student.objects.get(matric_number=matric_number)
+    ca_score = int(ca_score)
+    exam_score = int(exam_score)
+
+    if ca_score > 40 or exam_score > 60:
+        return HttpResponseBadRequest("Attempt to input invalid scores rejected.")
+
     course = Course.objects.get(code=course_code)
 
     if course not in request.user.lecturer.courses_taught.all():
         return HttpResponseForbidden("Begone! You cannot perform this action!")
+    
+    student = Student.objects.get(matric_number=matric_number)
 
     student_course_grade = CourseGrade.objects.get(student=student, course=course)
     student_course_grade.c_a_total = ca_score
@@ -78,8 +85,10 @@ def save_student_course_grade(request):
     student_course_grade.is_default = False
     student_course_grade.save()
 
+    total_score = ca_score + exam_score
+
     return JsonResponse(
-        f"Student: {matric_number} score for {course} saved.", safe=False
+        {'status': 'success', 'total_score': total_score}
     )
 
 
