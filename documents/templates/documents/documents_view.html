@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container p-4">
+    <ul>
+        {% for material in materials %}
+        <div class="mb-4">
+            <h3 class="display-5">{{material.title}}</h3>
+            <a href="{% url 'document_download' material.id  %}" class="btn btn-success">Download PDF</a>
+            <a href="{% url 'document_view' material.id %}" target="_blank" class="btn btn-primary">View PDF</a>
+        </div>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock content %}

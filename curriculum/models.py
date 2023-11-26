@@ -40,7 +40,7 @@ class Course(models.Model):
 
 
 class CourseScheme(models.Model):
-    course = models.ForeignKey("Course", on_delete=models.CASCADE)
+    course = models.OneToOneField("Course", on_delete=models.CASCADE)
     week_1 = models.CharField(max_length=120, null=True, blank=True)
     week_2 = models.CharField(max_length=120, null=True, blank=True)
     week_3 = models.CharField(max_length=120, null=True, blank=True)

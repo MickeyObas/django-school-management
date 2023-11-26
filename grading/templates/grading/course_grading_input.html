@@ -103,7 +103,7 @@
             }
 
             // Validate grade values
-            if(parseInt(caScore) > 40 || parseInt(examScore) > 60){
+            if(parseInt(caScore) > 40 || parseInt(examScore) > 60 || parseInt(caScore) < 0 || parseInt(examScore) < 0){
                 alert("Invalid input. CA Score must be between 0-40 and Exam score must be between 0-60.");
                 return false;
             };

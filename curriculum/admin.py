@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Course, DepartmentLevelCoursePack
+from .models import Course, DepartmentLevelCoursePack, CourseScheme
 
 
 @admin.register(Course)
@@ -19,3 +19,9 @@ class CourseAdmin(admin.ModelAdmin):
 class DepartmentLevelCoursePackAdmin(admin.ModelAdmin):
     list_display = ["department", "level"]
     ordering = ["department", "level"]
+
+
+@admin.register(CourseScheme)
+class CourseSchemeAdmin(admin.ModelAdmin):
+    list_display = ['course', 'week_1', 'week_2']
+    ordering = ['course__code']

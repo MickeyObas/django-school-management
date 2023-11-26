@@ -17,12 +17,18 @@
                             <h1>{{course.code}}</h1>
                             <p>{{course.no_of_units}} Units</p>
                             <p>{{course.description}}</p>
+                            {% if course.synopsis %}
+                            <p>{{course.synopsis}}</p>
+                            {% endif %}
                             <div>
                                 <h5>Lecturers In Charge</h5>
                                 {% for lecturer in course.get_assigned_lecturers %}
                                 <div>{{lecturer}}</div>
                                 {% endfor %}
                             </div>
+                            {% if course.coursedocument_set.all.count > 0 %}
+                            <a href="{% url 'documents_view' course.code %}">View Course Materials</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
