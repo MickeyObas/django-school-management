@@ -14,16 +14,20 @@
                 <div class="card">
                     <div class="card-body course__col">
                         <div class="card-text">
-                            <h1>{{course.code}}</h1>
-                            <p>{{course.no_of_units}} Units</p>
+                            <h2 class="text-decoration-underline">{{course.code}} - {{course.title}}</h2>
+                            <p><span class="fw-bold" style="font-size: 1.2em;">Units</span>: {{course.no_of_units}}</p>
                             <p>{{course.description}}</p>
                             {% if course.synopsis %}
                             <p>{{course.synopsis}}</p>
+                            {% else %}
+                            <p>Course Synopsis has not been uploaded yet.</p>
                             {% endif %}
                             <div>
-                                <h5>Lecturers In Charge</h5>
+                                <p class="fw-bold mb-1" style="font-size: 1.2em;">Lecturers In Charge</p>
                                 {% for lecturer in course.get_assigned_lecturers %}
                                 <div>{{lecturer}}</div>
+                                {% empty %}
+                                <p>Lecturers-in-charge information has not been uploaded yet.</p>
                                 {% endfor %}
                             </div>
                             {% if course.coursedocument_set.all.count > 0 %}
@@ -37,34 +41,38 @@
                 <div class="card">
                     <div class="card-header bg-success-subtle text-center"><h3>Course Outline</h3></div>
                     <div class="card-body course__outline__col text-center">
+                        {% if course.coursescheme %}
                     <div class="course__item mb-2">
                         <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <p class="course__topic">{{course.coursescheme.week_1}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 2</div>
+                        <p class="course__topic">{{course.coursescheme.week_2}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 3</div>
+                        <p class="course__topic">{{course.coursescheme.week_3}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 4</div>
+                        <p class="course__topic">{{course.coursescheme.week_4}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 5</div>
+                        <p class="course__topic">{{course.coursescheme.week_5}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 6</div>
+                        <p class="course__topic">{{course.coursescheme.week_6}}</p>
                     </div>
                     <div class="course__item mb-2">
-                        <div class="course__week fw-bold">Week 1</div>
-                        <p class="course__topic">Lorem ipsum dolor sit amet consectetur.</p>
+                        <div class="course__week fw-bold">Week 7</div>
+                        <p class="course__topic">{{course.coursescheme.week_7}}</p>
                     </div>
+                    {% else %}
+                    <p>Course outline has not been uploaded yet.</p>
+                    {% endif %}
                     </div>
                 </div>
             </div>
@@ -73,3 +81,4 @@
 </section>
     
 {% endblock content %}
+

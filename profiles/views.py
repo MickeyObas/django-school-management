@@ -84,7 +84,7 @@ def lecturer_complete_profile(request):
 
     context = {"form": form}
 
-    return render(request, "profiles/student_profile.html", context)
+    return render(request, "profiles/student_complete_profile.html", context)
 
 
 @login_required(login_url="login")

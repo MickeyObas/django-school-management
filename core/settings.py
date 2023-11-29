@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     # Internal Apps
     "curriculum.apps.CurriculumConfig",
     "profiles.apps.ProfilesConfig",
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     "records.apps.RecordsConfig",
     "attendance.apps.AttendanceConfig",
     "documents.apps.DocumentsConfig",
+    "payments.apps.PaymentsConfig",
+
     # Third-party Apps
     "rest_framework",
 ]

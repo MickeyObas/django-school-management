@@ -21,6 +21,10 @@ def index_students(request):
     return render(request, "pages/index_students.html")
 
 
+def index_payments(request):
+    return render(request, "pages/index_payments.html")
+
+
 @user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
 @login_required(login_url="login")
 def course_students(request, code):

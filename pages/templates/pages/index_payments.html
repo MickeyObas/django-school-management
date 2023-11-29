@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex h-50 justify-content-center align-items-center py-3">
+    <div class="col-md-4">
+        <div class="lead mb-4">Please select what you would like to pay for- and input your details</div>
+        <div class="card">
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="student-level">
+                    <input type="hidden" name="student-">
+                    <select name="payment-type" id="" class="form-select">
+                        <option value="">Select Payment Type</option>
+                        <option value="SCHF">School Fees</option>
+                        <option value="ACM">Accomodation Fees</option>
+                        <option value="IDR">ID Card Replacement</option>
+                    </select>
+                    <input type="submit" value="Generate Invoice" class="btn btn-primary w-100 text-center mt-3">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+{% endblock extrajs %} 
