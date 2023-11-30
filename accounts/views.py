@@ -26,8 +26,6 @@ def register(request):
             messages.error(request, "The passwords don't match.")
             return redirect("register")
 
-        # TODO Check if email is properly validated.
-
         if User.objects.filter(email=email).exists():
             messages.error(request, "User with this email already exists.")
             return redirect("register")

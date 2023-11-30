@@ -11,8 +11,6 @@ class Course(models.Model):
     slug = models.SlugField(max_length=70)
     synopsis = models.TextField(null=True)
 
-    # TODO Create Document model that can hold documents (mostly PDFS). This field can hold study material, student scores or memos. Research the best way to handle such functionality. These documents can either be user-uploaded, staff-uploaded or admin-uploaded.
-
     def __str__(self):
         return self.code
 

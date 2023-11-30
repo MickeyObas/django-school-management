@@ -93,9 +93,6 @@ def student_profile_view(request, pk):
 
     student = Student.objects.get(id=pk)
 
-    if not student.user == request.user and not request.user.account_type == "L":
-        return HttpResponseForbidden("Begone! You cannot perform this action!")
-
     context = {"student": student}
 
     return render(request, "profiles/student_profile_view.html", context)

@@ -3,22 +3,34 @@
 {% load static %}
 
 {% block content %}
-
-<h1>{{student.user.last_name}} {{student.user.first_name}}'s Profile</h1>
-
-{% if student.profile_picture %}
-<img src="{{student.profile_picture.url}}" alt="">
-{% else %}
-<img src="{% static 'assets\images\profile-img.png' %}" alt="" width="200">
-{% endif %}
-
-    <p>Current level: {{student.level}}</p>
-    <p>Department: {{student.department}}</p>
-    <p>Email Address: {{student.user.email}}</p> 
-    <br>
-
-    {% if request.user.account_type == 'L' %}
-    <p style="font-weight: bold;">Send {{student.user.last_name}} {{student.user.first_name}} a <span><a href="{% url 'send_message' student.user.id %}">message</a>.</span></p>
-    {% endif %}
+<!-- Student ID or Lecturer ID is received -->
+<section id="main" class="bg-tertiary pt-3">
+    <div class="container">
+        <div class="row py-3 vh-50">
+            <div class="col-md-3 border-1">
+                {% if student.profile_picture %}
+                <img src="{{student.profile_picture.url}}" alt="" class="img-fluid profile_picture">
+                {% else %}
+                <img src="{% static 'assets/images/profile-img.png' %}" alt="" class="img-fluid">
+                {% endif %}
+            </div>
+            <div class="col-md">
+                <h3>Profile Information</h3>
+                <div class="row mb-2">
+                    <div class="col-4 col-md-3">{{student.matric_number}}</div>
+                    <div class="col-4 col-md-3">{{student.department}}</div>
+                    <div class="col-4 col-md-3">{{student.level}} Level</div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-4 col-md-3">{{student.birthdate}}</div>
+                    <div class="col-4 col-md-3">{{student.state_of_origin}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock content %}
+
+{% block extrajs %}
+{% endblock extrajs %}

@@ -16,6 +16,6 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>",
         views.student_profile_view,
-        name="student-profile-view",
+        name="student_profile_view",
     ),
 ]
