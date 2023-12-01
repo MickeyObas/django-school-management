@@ -24,7 +24,6 @@ def index_grading(request):
     return render(request, "grading/index_grading.html")
 
 
-# TODO Handle route to this view
 @user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
 @login_required(login_url="login")
 def display_course_grades(request, code):

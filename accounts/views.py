@@ -18,7 +18,7 @@ def register(request):
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
         middle_name = request.POST.get("middle_name")
-        email = request.POST.get("email")
+        email = request.POST.get("email").lower()
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
@@ -47,7 +47,7 @@ def register(request):
 @already_logged_in
 def login(request):
     if request.method == "POST":
-        email = request.POST.get("email")
+        email = request.POST.get("email").lower()
         password = request.POST.get("password")
 
         user = auth.authenticate(request, email=email, password=password)

@@ -16,7 +16,6 @@ class BaseProfile(models.Model):
         blank=True, null=True, upload_to="profile_picture"
     )
     birthdate = models.DateField(default=timezone.now)
-    # TODO Clarify DEPARTMENT - LECTURER relaional logic.
     department = models.ForeignKey(
         Department, null=True, blank=True, on_delete=models.CASCADE
     )
@@ -74,6 +73,9 @@ class Student(BaseProfile):
     course_pack = models.ForeignKey(
         "curriculum.DepartmentLevelCoursePack", on_delete=models.SET_NULL, null=True
     )
+
+    has_registered_courses = models.BooleanField(default=False)
+    courses_approved = models.BooleanField(default=False)
 
 
 class Lecturer(BaseProfile):

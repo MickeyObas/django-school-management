@@ -51,9 +51,6 @@ def view_message(request, pk):
     return render(request, "messaging/view_message.html", context)
 
 
-# TODO Create a messaging interface with sent, outbox, received- and allow both lecturers and students to be able to send messages.
-
-
 @login_required(login_url="login")
 def send_message(request, pk):
 
@@ -84,14 +81,21 @@ def send_message(request, pk):
 
 
 def send_message(request):
-    # TODO: Gracefully handle messages to users that do not exist
     if request.method == "POST":
         data = json.loads(request.body)
         recipient = data["recipient"]
         message_body = data["message"]
         title = data["title"]
 
-        recipient = User.objects.get(email=recipient)
+        try:
+            recipient = User.objects.get(email=recipient)
+        except User.DoesNotExist:
+            return JsonResponse(
+                {
+                    "status": "failed",
+                    "message": f"User with email {recipient} does not exist.",
+                }
+            )
 
         Message.objects.create(
             sender=request.user, recipient=recipient, body=message_body, title=title

@@ -3,13 +3,11 @@ from django.core.exceptions import ValidationError
 
 from .models import Student
 from department.models import Department
+from department.choices import DEPARTMENT_CHOICES
 
 
 class CompleteProfileForm(forms.Form):
     GENDER_CHOICES = (("M", "Male"), ("F", "Female"))
-
-    # TODO Find a way to populate this using the actual list of departments available
-    DEPARTMENT_CHOICES = (("CSC", "Computer Science"), ("SEN", "Software Engineering"))
 
     first_name = forms.CharField(
         disabled=True,

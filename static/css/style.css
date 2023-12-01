@@ -1,3 +1,8 @@
+.norm{
+    cursor: default !important;
+}
+
+
 .vh-75{
     height: 75vh;
 }
@@ -159,6 +164,18 @@
 .course__item .course__week{
     font-size: 18px;
     text-decoration: underline;
+}
+
+.course-reg-body{
+    min-height: 325px;
+}
+
+.courses-proposed-box{
+    
+}
+
+.courses-proposed-box li{
+    list-style-type: none;
 }
 
 /* Attendance */

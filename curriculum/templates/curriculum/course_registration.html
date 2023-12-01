@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block background_image %}{% static 'assets/images/school-25.jpg' %}{% endblock background_image %}
+
+{% block content %}
+
+    <!-- Courses -->
+    <section class="">
+        <div class="container">
+            <div class="row pt-3 d-flex justify-content-center mt-md-2">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header"><h3 class="display-4 text-center">Course Registration</h3></div>
+                        <div class="course-reg-body card-body text-center">
+                            {% if request.user.student.course_pack == None %}
+                            <p>Course Registration is unavailable. Please check back later.</p>
+                            {% else %}
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td colspan="2" class="text-start py-3">
+                                            <div class="d-flex justify-content-around">
+                                                <div>
+                                                    Registration Status: 
+                                                    {% if request.user.student.has_registered_courses%}
+                                                    <small id="registerStatusDisplay" class="btn btn-sm btn-success norm"> Registered</small>
+                                                    {% else %}
+                                                    <small id="registerStatusDisplay" class="btn btn-sm btn-danger norm">Not Registered</small>
+                                                    {% endif %}
+                                                </div>
+                                                <div> 
+                                                    Approval Status: 
+                                                    {% if request.user.student.courses_approved %}
+                                                    <small class="btn btn-sm btn-success norm"> Approved</small>
+                                                    {% else %}
+                                                    <small class="btn btn-sm btn-danger norm">Not Approved</small>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Proposed Courses</td>
+                                        <td>Outstanding Courses</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!-- Box for Proposed Courses -->
+                                            <div class="courses-proposed-box">
+                                                {% for course in request.user.student.course_pack.courses.all %}
+                                                <li>{{course.code}} [{{course.no_of_units}}u]</li>
+                                                {% endfor %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <!-- Box for Outstanding Courses  -->
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-body-secondary">
+                                            <!-- Course(s) Total -->
+                                            Total: {{request.user.student.course_pack.courses.count}} |  Total Units: {{request.user.student.course_pack.total_no_of_units}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button id="registerBtn" data-student-id="{{request.user.student.id}}" class="btn btn-primary w-100"><i class="fa fa-check me-2"></i>Submit to Register Course(s)</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    const registerBtn = document.getElementById('registerBtn');
+    const studentId = registerBtn.dataset.studentId;
+    const registerStatusDisplay = document.getElementById("registerStatusDisplay");
+
+
+    registerBtn.addEventListener('click', (e) => {
+        console.log(studentId);
+        url = "{% url 'register_courses' %}";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                "X-CSRFToken": "{{csrf_token}}",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "student-id": studentId
+            })
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            if(data['status'] == 'success'){
+                registerStatusDisplay.classList.remove('btn-danger');
+                registerStatusDisplay.classList.add('btn-success');
+                registerStatusDisplay.textContent = "Registered";
+            }
+            alert(data['message']);
+        })
+        .catch((e) => {
+            console.log("Whoops an error occured. ", e);
+        })
+    })
+
+</script>
+{% endblock extrajs %}

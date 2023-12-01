@@ -17,15 +17,15 @@ class PaymentType(models.Model):
 class PaymentRecord(models.Model):
 
     STATUS_CHOICES = (
-        ('A', 'Approved'),
-        ('P', 'Pending'),
-        ('R', 'Rejected'),
+        ("A", "Approved"),
+        ("P", "Pending"),
+        ("R", "Rejected"),
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     payer = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
-    payment_type = models.OneToOneField('PaymentType', on_delete=models.CASCADE)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
+    payment_type = models.OneToOneField("PaymentType", on_delete=models.CASCADE)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default="P")
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
@@ -34,7 +34,7 @@ class PaymentRecord(models.Model):
 
 
 class PaymentReceipt(models.Model):
-    payment_record = models.OneToOneField('PaymentRecord', on_delete=models.PROTECT)
+    payment_record = models.OneToOneField("PaymentRecord", on_delete=models.PROTECT)
 
     def __str__(self):
         f"Receipt for {self.payment_record.payment_type.title} by {self.payment_record.payer}"

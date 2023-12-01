@@ -67,6 +67,13 @@ class DepartmentLevelCoursePack(models.Model):
         verbose_name = "DepartmentLevelCoursePack"
         verbose_name_plural = "DepartmentLevelCoursePacks"
 
+    def total_no_of_units(self):
+        total = 0
+        if self.courses:
+            for course in self.courses.all():
+                total += course.no_of_units
+        return total
+
     def __str__(self):
         return (
             f"Course pack for {self.level} level {self.department} department students"

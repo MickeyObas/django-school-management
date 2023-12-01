@@ -7,6 +7,7 @@ class ProfilesConfig(AppConfig):
 
     def ready(self) -> None:
 
+        from .signals import assign_course_pack_to_student
         from accounts.signals import create_profile_from_user
 
         return super().ready()

@@ -23,5 +23,5 @@ class DepartmentLevelCoursePackAdmin(admin.ModelAdmin):
 
 @admin.register(CourseScheme)
 class CourseSchemeAdmin(admin.ModelAdmin):
-    list_display = ['course', 'week_1', 'week_2']
-    ordering = ['course__code']
+    list_display = ["course", "week_1", "week_2"]
+    ordering = ["course__code"]

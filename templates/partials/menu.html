@@ -12,8 +12,12 @@
                         <a href="{% url 'dashboard' %}" class="nav-link">Home</a>
                     </li>
                     {% if request.user.account_type == 'S' %}
-                    <li class="nav-item">
-                        <a href="{% url 'index_curriculum' %}" class="nav-link">Curriculum</a>
+                    <li class="nav-item dropdown">
+                        <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Curriculum</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'index_curriculum' %}" class="dropdown-item">My Courses</a></li>
+                            <li><a href="{% url 'course_registration' %}" class="dropdown-item">Course Registration</a></li>
+                        </ul>
                     </li>
                     {% else %}
                     <li class="nav-item dropdown">

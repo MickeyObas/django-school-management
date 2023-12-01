@@ -14,14 +14,14 @@
                     <div class="card">
                         <div class="card-header"><h3 class="display-4 text-center">My Courses</h3></div>
                         <div class="card-body text-center">
-                            {% if request.user.student.course_pack %}
+                            {% if request.user.student.has_registered_courses %}
                             <ul class="list-unstyled">
                                 {% for course in request.user.student.course_pack.courses.all %}
                                 <li class=""><a href="{% url 'course_page' course.slug %}" class="btn btn-success text-center mb-3 w-100"><span class="fw-bold">{{course.code}}</span>: {{course.title}}</a></li>
                                 {% endfor %}
                             </ul>
                             {% else %}
-                            <p>No Course Registered Yet</p>
+                            <p>No Course Registered Yet.</p>
                             {% endif %}
                         </div>
                     </div>

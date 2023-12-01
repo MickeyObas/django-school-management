@@ -170,12 +170,17 @@
             }).then((response) => {
                 return response.json();
             }).then((data) => {
-                console.log("Message sent successfully");
-                const updatedCount = data['updated-count'];
-                sentCountDisplay.textContent = updatedCount;
-                recipient.value = "";
-                title.value = "";
-                messageBody.textContent = "";
+                if(data['status'] == 'failed'){
+                    alert(data['message']);
+                    return false;
+                } else{
+                    console.log("Message sent successfully");
+                    const updatedCount = data['updated-count'];
+                    sentCountDisplay.textContent = updatedCount;
+                    recipient.value = "";
+                    title.value = "";
+                    messageBody.textContent = "";
+                }
             }).catch(e => {
                 console.log("Whoops. Something went wrong, ", e);
             })

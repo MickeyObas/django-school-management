@@ -13,11 +13,11 @@
                 <tr>
                     <th>Matric Number</th>
                     <th>Name</th>
+                    <th>Level</th>
+                    <th>Department</th>
                     <th>CA</th>
                     <th>Exam</th>
                     <th>Total</th>
-                    <th>Department</th>
-                    <th>Level</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -26,6 +26,8 @@
                 <tr data-student-id="{{student.matric_number}}">
                     <td>{{student.matric_number}}</td>
                     <td class="text-primary"><a href="{% url 'student_profile_view' student.id %}">{{student.full_name}}</a></td>
+                    <td>{{student.level}}</td>
+                    <td>{{student.department}}</td>
                     {% for student_course_grade in student.coursegrade_set.all %}
                     {% if student_course_grade.course.title == course.title %}
                     {% if student_course_grade.is_default %}
@@ -37,8 +39,6 @@
                     <td>{{student_course_grade.exam_total}}</td>
                     <td>{{student_course_grade.overall}}</td>
                     {% endif %}
-                    <td>{{student.department}}</td>
-                    <td>{{student.level}}</td>
                     {% if not student_course_grade.is_default %}
                     <td><button class="btn btn-success disabled saveButton" data-matricNumber="{{student.matric_number}}" data-courseCode="{{course.code}}">Pending
                     </button></td>
@@ -87,7 +87,6 @@
         const url = "{% url 'save_student_course_grade' %}"
 
         button.addEventListener('click', (e) => {
-            // TODO Disable save function after score has been uploded and set button to pending
             e.preventDefault();
             const row = e.target.closest('tr');
             const matricNumber = row.dataset.studentId === button.dataset.matricnumber ? row.dataset.studentId : null

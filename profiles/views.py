@@ -93,6 +93,9 @@ def student_profile_view(request, pk):
 
     student = Student.objects.get(id=pk)
 
+    if request.user.student.id == student.id:
+        return redirect("dashboard")
+
     context = {"student": student}
 
     return render(request, "profiles/student_profile_view.html", context)
