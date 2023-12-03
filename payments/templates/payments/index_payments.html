@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block prejs %}
+<script src="https://js.stripe.com/v3/"></script>
+{% endblock prejs %}
+
+{% block content %}
+<div class="container d-flex h-50 justify-content-center align-items-center py-3">
+    <div class="col-md-4">
+        <div class="lead mb-4">Please select what you would like to pay for- and input your details</div>
+        <div class="card">
+            <div class="card-body">
+                <input type="hidden" name="student-level">
+                <input type="hidden" name="student-">
+                <select name="payment-type" id="" class="form-select">
+                    <option value="">Select Payment Type</option>
+                    <option value="SCHF">School Fees</option>
+                    <option value="ACM">Accomodation Fees</option>
+                    <option value="IDR">ID Card Replacement</option>
+                </select>
+                <button id="submitBtn" class="btn btn-primary w-100 text-center mt-3">Generate Invoice</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block extrajs %}
+<script>
+    fetch('config/')
+    .then((result) => {return result.json();})
+    .then((data) => {
+        const stripe = Stripe(data.publicKey);
+        document.getElementById('submitBtn').addEventListener('click', (e) => {
+            fetch('create-checkout-session')
+            .then((result) => {return result.json();})
+            .then((data) => {
+                console.log(data);
+                return stripe.redirectToCheckout({sessionId: data.sessionId})
+            })
+            .then((res) => {
+                console.log(res);
+            })
+        })
+    })
+    .catch((e) => {
+        console.log("Whoops, an error occured, ", e);
+    })
+
+</script>
+{% endblock extrajs %} 

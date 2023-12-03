@@ -25,10 +25,12 @@ def course_page(request, course_slug):
     return render(request, "curriculum/course_page.html", context)
 
 
+@login_required(login_url="login")
 def course_registration(request):
     return render(request, "curriculum/course_registration.html")
 
 
+@login_required(login_url="login")
 def register_courses(request):
     if request.method == "POST":
         if request.user.student.has_registered_courses:

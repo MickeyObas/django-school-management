@@ -146,3 +146,7 @@ AUTH_USER_MODEL = "accounts.User"
 MEDIA_URL = "media/"
 
 MEDIA_ROOT = "media"
+
+# Stripe Configuration
+STRIPE_PUBLISHABLE_KEY = "pk_test_51NuvsxGmy2bYQ49hWNTrWOTlYLcBHBCX6810klE6yeg90wWMQ6ndwFRypn1qNUmG79Y8GjCvMxuy8EfHQYcUdymn00LqcirOUj"
+STRIPE_SECRET_KEY = "sk_test_51NuvsxGmy2bYQ49hRBcpfXzg2fysBqliFcimwh3wacrGD5LorHJrq77QIHpjS0KIhQolMjrNjjPhkV2xb5L7WQcS008dypmdyK"
