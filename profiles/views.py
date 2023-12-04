@@ -88,7 +88,6 @@ def lecturer_complete_profile(request):
 
 
 @login_required(login_url="login")
-# FIXME Students should have a dedicated profile view different from lecturers.
 def student_profile_view(request, pk):
 
     student = Student.objects.get(id=pk)

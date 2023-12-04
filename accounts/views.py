@@ -11,7 +11,7 @@ from .decorators import already_logged_in
 @already_logged_in
 def register(request):
 
-    # FIXME New user can reigister without name values and password strength checks.
+    # FIXME New user can reigister without name values and password strength checks. Also add email confirmation. Extremely important.
 
     if request.method == "POST":
         account_type = request.POST.get("account_type")
