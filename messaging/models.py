@@ -31,5 +31,5 @@ class MessageNotififcation(models.Model):
     is_read = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = "Message Notification"
-        verbose_name_plural = "Message Notifications"
+        verbose_name = "Message notification"
+        verbose_name_plural = "Message notifications"

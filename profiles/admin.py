@@ -1,9 +1,9 @@
 from django.contrib import admin
 
 from .models import Student, Lecturer
+from core.admin import custom_admin_site
 
 
-@admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = [
         "id",
@@ -19,7 +19,11 @@ class StudentAdmin(admin.ModelAdmin):
     ordering = ["matric_number"]
 
 
-@admin.register(Lecturer)
 class LecturerAdmin(admin.ModelAdmin):
     list_display = ["user", "full_name", "department", "gender"]
     list_display_links = ["user"]
+
+
+custom_admin_site.register(Lecturer, LecturerAdmin)
+custom_admin_site.register(Student, StudentAdmin)
+

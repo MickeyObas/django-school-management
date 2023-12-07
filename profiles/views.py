@@ -87,13 +87,17 @@ def lecturer_complete_profile(request):
     return render(request, "profiles/student_complete_profile.html", context)
 
 
+# 
 @login_required(login_url="login")
 def student_profile_view(request, pk):
 
     student = Student.objects.get(id=pk)
 
-    if request.user.student.id == student.id:
-        return redirect("dashboard")
+    try:
+        if request.user.student.id == student.id:
+            return redirect("dashboard")
+    except Exception as e:
+        print("Oh, ", e)
 
     context = {"student": student}
 

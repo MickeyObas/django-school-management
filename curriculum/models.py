@@ -52,6 +52,9 @@ class CourseScheme(models.Model):
     week_11 = models.CharField(max_length=120, null=True, blank=True)
     week_12 = models.CharField(max_length=120, null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = "Course(s) Outline"
+
     def __str__(self):
         return f"Course scheme/outline for {self.course.code}"
 

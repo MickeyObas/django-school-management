@@ -24,8 +24,8 @@ class StudentAttendance(models.Model):
                 fields=["student", "date", "course"], name="one-attendance-per-date"
             )
         ]
-        verbose_name = "StudentAttendance item"
-        verbose_name_plural = "StudentAttendance items"
+        verbose_name = "StudentAttendance Item"
+        verbose_name_plural = "StudentAttendance Items"
 
     def __str__(self):
 

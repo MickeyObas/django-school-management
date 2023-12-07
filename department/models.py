@@ -8,6 +8,7 @@ class Department(models.Model):
         "profiles.Lecturer",
         on_delete=models.DO_NOTHING,
         related_name="dept_in_charge_of",
+        null=True
     )
     description = models.TextField()
     location = models.CharField(max_length=256)

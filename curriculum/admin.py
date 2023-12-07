@@ -1,9 +1,9 @@
 from django.contrib import admin
 
+from core.admin import custom_admin_site
 from .models import Course, DepartmentLevelCoursePack, CourseScheme
 
 
-@admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
     list_display = ["code", "title"]
     prepopulated_fields = {
@@ -15,13 +15,17 @@ class CourseAdmin(admin.ModelAdmin):
     ordering = ["code"]
 
 
-@admin.register(DepartmentLevelCoursePack)
 class DepartmentLevelCoursePackAdmin(admin.ModelAdmin):
     list_display = ["department", "level"]
     ordering = ["department", "level"]
 
 
-@admin.register(CourseScheme)
+
 class CourseSchemeAdmin(admin.ModelAdmin):
     list_display = ["course", "week_1", "week_2"]
     ordering = ["course__code"]
+
+
+custom_admin_site.register(Course, CourseAdmin)
+custom_admin_site.register(DepartmentLevelCoursePack, DepartmentLevelCoursePackAdmin)
+custom_admin_site.register(CourseScheme, CourseSchemeAdmin)
