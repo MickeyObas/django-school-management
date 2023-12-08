@@ -87,7 +87,7 @@ def lecturer_complete_profile(request):
     return render(request, "profiles/student_complete_profile.html", context)
 
 
-# 
+#
 @login_required(login_url="login")
 def student_profile_view(request, pk):
 

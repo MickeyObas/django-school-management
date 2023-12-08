@@ -48,7 +48,9 @@ def register_courses(request):
             student.has_registered_courses = True
             student.save()
             assert request.user.student.id == int(student_id), "Student ID Inconsistent"
-            student_courses_registration_complete.send(sender='register_courses', student_id=student_id)
+            student_courses_registration_complete.send(
+                sender="register_courses", student_id=student_id
+            )
 
             return JsonResponse(
                 {"status": "success", "message": "Courses registered successfully."}

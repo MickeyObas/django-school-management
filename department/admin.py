@@ -10,9 +10,10 @@ class DepartmentAdmin(admin.ModelAdmin):
         "name",
         "head_of_department",
         "no_of_enrolled_staff",
-        "no_of_enrolled_students"
+        "no_of_enrolled_students",
     ]
-    search_fields = ['name', 'abbreviation']
-    ordering = ['abbreviation']
+    search_fields = ["name", "abbreviation"]
+    ordering = ["abbreviation"]
+
 
 custom_admin_site.register(Department, DepartmentAdmin)

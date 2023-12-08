@@ -10,5 +10,5 @@ urlpatterns = [
     path(
         "document_download/<int:pk>/", views.document_download, name="document_download"
     ),
-    path('result_pdf_view', views.result_pdf_view, name='result_pdf_view')
+    path("result_pdf_view", views.result_pdf_view, name="result_pdf_view"),
 ]

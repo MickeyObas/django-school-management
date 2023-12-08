@@ -27,6 +27,10 @@ class StudentAttendance(models.Model):
         verbose_name = "StudentAttendance Item"
         verbose_name_plural = "StudentAttendance Items"
 
+    @property
+    def matric_number(self):
+        return self.student.matric_number
+
     def __str__(self):
 
-        return f"{self.student.user.first_name} was {self.get_status_display()} on {self.date}"
+        return f"{self.matric_number}: {self.student.user.last_name} {self.student.user.first_name} was {self.get_status_display()} on {self.date}"

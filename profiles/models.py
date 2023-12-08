@@ -71,12 +71,15 @@ class Student(BaseProfile):
     )
 
     course_pack = models.ForeignKey(
-        "curriculum.DepartmentLevelCoursePack", on_delete=models.SET_NULL, null=True, blank=True
+        "curriculum.DepartmentLevelCoursePack",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
     )
 
     has_registered_courses = models.BooleanField(default=False)
     courses_approved = models.BooleanField(default=False)
-    
+
 
 class Lecturer(BaseProfile):
     # TODO Add qualifications as a field.

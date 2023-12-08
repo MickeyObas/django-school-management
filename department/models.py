@@ -8,7 +8,8 @@ class Department(models.Model):
         "profiles.Lecturer",
         on_delete=models.DO_NOTHING,
         related_name="dept_in_charge_of",
-        null=True
+        blank=True,
+        null=True,
     )
     description = models.TextField()
     location = models.CharField(max_length=256)
@@ -16,7 +17,7 @@ class Department(models.Model):
     abbreviation = models.CharField(max_length=3, null=True)
 
     def __str__(self):
-        return self.name
+        return self.abbreviation
 
     @property
     def faculty_members(self):
@@ -25,7 +26,7 @@ class Department(models.Model):
     @property
     def enrolled_students(self):
         return self.student_set.all()
-    
+
     @property
     def no_of_enrolled_students(self):
         return self.student_set.all().count()

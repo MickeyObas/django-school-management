@@ -14,8 +14,8 @@ from accounts.permission_handlers.basic import is_student, is_lecturer
 import os
 
 
-@user_passes_test(is_lecturer, login_url='dashboard', redirect_field_name=None)
-@login_required(login_url='login')
+@user_passes_test(is_lecturer, login_url="dashboard", redirect_field_name=None)
+@login_required(login_url="login")
 def document_upload(request):
 
     form = DocumentUploadForm()
@@ -33,7 +33,7 @@ def document_upload(request):
     return render(request, "documents/document_upload.html", context)
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def document_view(request, pk):
 
     material = CourseDocument.objects.get(id=pk)
@@ -43,7 +43,7 @@ def document_view(request, pk):
     return FileResponse(open(document_path, "rb"), content_type="application/pdf")
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def documents_view(request, code):
     course = Course.objects.get(code=code)
     materials = course.coursedocument_set.all()
@@ -53,30 +53,27 @@ def documents_view(request, code):
     return render(request, "documents/documents_view.html", context)
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def document_download(request, pk):
     document = CourseDocument.objects.get(id=pk)
 
     return FileResponse(document.file, as_attachment=True)
 
 
-@login_required(login_url='login')
+@login_required(login_url="login")
 def result_pdf_view(request, *args, **kwargs):
     student = Student.objects.get(user=request.user)
     grades = CourseGrade.objects.filter(student=student)
 
-    data = {
-        'grades': grades,
-        'student': student
-        }
+    data = {"grades": grades, "student": student}
 
-    response = renderers.render_to_pdf('documents/result-template.html', data)
+    response = renderers.render_to_pdf("documents/result-template.html", data)
 
     if response.status_code == 404:
         raise Http404("Result not found")
-    
+
     filename = f"Result_Sheet_{student.full_name}.pdf"
-    
+
     content = f"attachment; filename={filename}"
     response["Content-Disposition"] = content
     return response

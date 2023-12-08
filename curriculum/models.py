@@ -38,14 +38,13 @@ class Course(models.Model):
 
     @property
     def course_code_prefix(self):
-        prefix = ''
+        prefix = ""
         for char in self.code:
             if char.isalpha():
                 prefix += char
             else:
                 break
         return prefix
-
 
 
 class CourseScheme(models.Model):
@@ -89,6 +88,4 @@ class DepartmentLevelCoursePack(models.Model):
         return total
 
     def __str__(self):
-        return (
-            f"{self.department.abbreviation} - {self.level}"
-        )
+        return f"{self.department.abbreviation} - {self.level}"

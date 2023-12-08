@@ -8,10 +8,10 @@ class DepartmentForm(forms.ModelForm):
     class Meta:
         model = Department
         fields = [
-            'name',
-            'head_of_department',
-            'description',
-            'location',
-            'logo',
-            'abbreviation'
+            "name",
+            "head_of_department",
+            "description",
+            "location",
+            "logo",
+            "abbreviation",
         ]
