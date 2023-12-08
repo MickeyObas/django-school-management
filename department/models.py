@@ -25,7 +25,11 @@ class Department(models.Model):
     @property
     def enrolled_students(self):
         return self.student_set.all()
+    
+    @property
+    def no_of_enrolled_students(self):
+        return self.student_set.all().count()
 
     @property
-    def no_of_faculty_members(self):
+    def no_of_enrolled_staff(self):
         return self.lecturer_set.all().count()

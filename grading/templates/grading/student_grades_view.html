@@ -27,8 +27,13 @@
                                 {% for record in grades %}
                                 <tr>
                                     <td>{{record.course.code}}</td>
+                                    {% if record.is_default %}
+                                    <td>-</td>
+                                    <td>-</td>
+                                    {% else %}
                                     <td>{{record.overall}}</td>
                                     <td>{{record.grade_letter}}</td>
+                                    {% endif %}
                                 </tr>
                                 {% endfor %}
                             </table>

@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from .models import Course
+from grading.signals import student_courses_registration_complete
 from profiles.models import Student
 from accounts.permission_handlers.basic import is_student
 
@@ -46,6 +47,9 @@ def register_courses(request):
             student = Student.objects.get(id=student_id)
             student.has_registered_courses = True
             student.save()
+            assert request.user.student.id == int(student_id), "Student ID Inconsistent"
+            student_courses_registration_complete.send(sender='register_courses', student_id=student_id)
+
             return JsonResponse(
                 {"status": "success", "message": "Courses registered successfully."}
             )

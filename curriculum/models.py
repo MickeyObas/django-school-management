@@ -36,6 +36,17 @@ class Course(models.Model):
 
         return students
 
+    @property
+    def course_code_prefix(self):
+        prefix = ''
+        for char in self.code:
+            if char.isalpha():
+                prefix += char
+            else:
+                break
+        return prefix
+
+
 
 class CourseScheme(models.Model):
     course = models.OneToOneField("Course", on_delete=models.CASCADE)
@@ -79,5 +90,5 @@ class DepartmentLevelCoursePack(models.Model):
 
     def __str__(self):
         return (
-            f"Course pack for {self.level} level {self.department} department students"
+            f"{self.department.abbreviation} - {self.level}"
         )

@@ -7,7 +7,9 @@ from profiles.models import Student, Lecturer
 
 
 class CustomAdmiSite(admin.AdminSite):
-    site_header = "Random Test"
+    site_header = "Schooled-You"
+    site_title = "Schooled-You Admin Site"
+    # enable_nav_sidebar = False
 
     def get_app_list(self, request: WSGIRequest) -> list[Any]:
 
