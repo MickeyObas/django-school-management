@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Department
-from profiles.models import Lecturer
+from profiles.models import Student, Lecturer
 
 
 class DepartmentForm(forms.ModelForm):
@@ -15,3 +15,12 @@ class DepartmentForm(forms.ModelForm):
             "logo",
             "abbreviation",
         ]
+
+
+class ApproveStudentsCoursesForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ["matric_number", "department", "level", "courses_approved"]
+        widgets = {
+            "matric_number": forms.TextInput(attrs={"readonly": True}),
+        }

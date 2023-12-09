@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="display-5 mb-2 text-center">Approve Students' Course Form</div>
+<div class="container py-4 w-100 d-flex justify-content-center">
+    <form action="" method="post">
+        {% csrf_token %}
+        {{formset.management_form}}
+        <table class="table table-bordered text-center" style="width: 800px">
+            <thead class="bg-primary">
+                <tr>
+                    <th>S/N</th>
+                    <th>Matric Number</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th>Approve</th>
+                </tr>
+                <tbody>
+                    {% for form in formset %}
+                    {{form.id}}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{form.matric_number}}</td>
+                        <td>{{form.department}}</td>
+                        <td>{{form.level}}</td>
+                        <td>{{form.courses_approved}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </thead>
+        </table>
+        <input type="submit" value="Submit" class="btn btn-primary w-100 text-center mt-2">
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block extrajs %}
+
+<script>
+    const selectBtns = document.querySelectorAll('select');
+    selectBtns.forEach((select) => {
+        select.classList.add('no-edit');
+        select.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+        })
+        select.addEventListener('mouseenter', () => {
+            select.title = "Cannot Edit";
+        })
+        select.addEventListener('mouseleave', () => {
+            select.title = "";
+        })
+    })
+</script>
+
+{% endblock extrajs%}

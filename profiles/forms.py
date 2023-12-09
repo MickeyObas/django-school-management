@@ -61,3 +61,14 @@ class StudentCompleteProfileForm(CompleteProfileForm):
 
 class LecturerCompleteProfileForm(CompleteProfileForm):
     pass
+
+
+class ApproveCoursesAdminForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ["matric_number", "department", "level", "courses_approved"]
+        widgets = {
+            "matric_number": forms.TextInput(attrs={"readonly": True}),
+            "department": forms.Select(attrs={"disabled": True}),
+            "level": forms.Select(attrs={"disabled": True}),
+        }

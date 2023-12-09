@@ -193,3 +193,7 @@ body{
     width: 100%;
     position: relative;
 }
+
+.no-edit:hover{
+    cursor: not-allowed;
+}

@@ -7,7 +7,7 @@ from core.admin import custom_admin_site
 class MessageAdmin(admin.ModelAdmin):
     list_display = ["id", "sender", "recipient", "title", "timestamp"]
     list_display_links = ["sender", "recipient"]
-    search_fields = ['id' ,'sender__email', 'recipient__email']
+    search_fields = ["id", "sender__email", "recipient__email"]
 
 
 class MessageNotificationAdmin(admin.ModelAdmin):

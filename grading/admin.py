@@ -31,7 +31,8 @@ class CourseGradeAdmin(admin.ModelAdmin):
                 "%d Course Grade was successfully marked as approved.",
                 "%d Course Grades was successfully marked as approved.",
                 updated,
-            ) % updated,
+            )
+            % updated,
         )
 
 

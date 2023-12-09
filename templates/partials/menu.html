@@ -24,7 +24,9 @@
                         <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Curriculum</a>
                         <ul class="dropdown-menu">
                             <li><a href="{% url 'document_upload' %}" class="dropdown-item">Upload Document</a></li>
-                            <li><a href=""></a></li>
+                            {% if request.user.lecturer.courseregistrationofficer_set %}
+                            <li><a href="{% url 'course_approval' %}" class="dropdown-item">Approve Course Forms</a></li>
+                            {% endif %}
                         </ul>
                     </li>
                     {% endif %}

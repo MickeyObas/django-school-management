@@ -10,10 +10,10 @@ from datetime import date
 class StudentAttendanceAdmin(admin.ModelAdmin):
     list_display = ["matric_number", "course", "status", "date", "comment"]
     list_display_links = ["matric_number"]
-    list_filter = ['status', 'course', 'student__department']
-    search_fields = ['matric_number', 'course', 'date']
-    ordering = ['date']
-    date_hierarchy = 'date'
+    list_filter = ["status", "course", "student__department"]
+    search_fields = ["matric_number", "course", "date"]
+    ordering = ["date"]
+    date_hierarchy = "date"
 
 
 custom_admin_site.register(StudentAttendance, StudentAttendanceAdmin)

@@ -34,3 +34,26 @@ class Department(models.Model):
     @property
     def no_of_enrolled_staff(self):
         return self.lecturer_set.all().count()
+
+
+class CourseRegistrationOfficer(models.Model):
+    class LevelChoices(models.TextChoices):
+        FIRST_YEAR = "100", "100 Level"
+        SECOND_YEAR = "200", "200 Level"
+        THIRD_YEAR = "300", "300 Level"
+        FOURTH_YEAR = "400", "400 Level"
+        FIFTH_YEAR = "500", "500 Level"
+
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    level = models.CharField(max_length=3, choices=LevelChoices.choices)
+    lecturer = models.ForeignKey("profiles.Lecturer", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Course Registration Officer"
+        verbose_name_plural = "Course Registration Officers"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["department", "lecturer", "level"],
+                name="one-officer-per-department-level",
+            )
+        ]

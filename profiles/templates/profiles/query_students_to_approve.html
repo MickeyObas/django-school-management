@@ -1,0 +1,40 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_urls static admin_list %}
+
+{% block content %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static "admin/css/changelists.css" %}">
+  {% if cl.formset %}
+    <link rel="stylesheet" href="{% static "admin/css/forms.css" %}">
+  {% endif %}
+  {% if cl.formset or action_form %}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  {{ media.css }}
+  {% if not actions_on_top and not actions_on_bottom %}
+    <style>
+      #changelist table thead th:first-child {width: inherit}
+    </style>
+  {% endif %}
+{% endblock %}
+
+<h1>Search Students to approve course form</h1>
+
+<form action="approve_courses/">
+    {{formset.management_form}}
+    <div style="margin-top: 20px; margin-bottom: 10px; display: flex; align-items: center">
+        <div class="" style="margin-right: 15px;">
+            <label for="department">Department</label>
+            <input type="text" name="department" id="department">
+        </div>
+        <div class="" style="margin-right: 15px;">
+            <label for="level">Level</label>
+            <input type="text" name="level" id="level">
+        </div>
+        <input type="submit" name="" id="searchBtn">
+    </div>
+</form>
+
+{% endblock %}
